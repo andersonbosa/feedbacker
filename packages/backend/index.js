@@ -12,11 +12,13 @@ const CreateApiKeyHandler = require('./handlers/apikey')
 
 const app = new Koa()
 const router = new Router()
-
 const {
-  JWT_SECRET = '',
-  PORT = 3000
+  JWT_SECRET,
+  BACKEND_API_PORT = 3000
 } = process.env
+
+console.log('***************', JWT_SECRET)
+
 const authMiddleware = jwt({ secret: JWT_SECRET })
 app.use(bodyParser())
 app.use(cors())
@@ -40,8 +42,8 @@ router.post('/feedbacks', feedbacksHandler.create)
 router.get('/feedbacks/summary', authMiddleware, feedbacksHandler.getSummary)
 app.use(router.routes())
 app.use(router.allowedMethods())
-app.listen(PORT, () => {
-  console.log(`Server running http://localhost:${PORT}`)
+app.listen(BACKEND_API_PORT, () => {
+  console.log(`Server running http://localhost:${BACKEND_API_PORT}`)
 })
 
 module.exports = app

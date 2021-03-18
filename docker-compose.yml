@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  feedbacker-api:
+    build:
+      context: packages/backend
+    ports:
+      - "3000:3000"
+    env_file: .env
+    networks:
+      - internal
+
+  redis:
+    image: "redis:alpine"
+
+networks:
+  internal:
