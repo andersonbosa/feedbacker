@@ -1,0 +1,34 @@
+{
+  "name": "feedbacker-app",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Anderson Bosa <andersonbosa0@gmail.com>",
+  "scripts": {
+    "clean": "lerna clean --yes && rm -Rf package-lock.json node_modules",
+    "bootstrap": "lerna bootstrap --hoist",
+    "install": "npm run bootstrap",
+    "postinstall": "npm run bootstrap",
+    "dev": "lerna run dev --stream",
+    "dev:backend": "npm run dev --prefix packages/backend",
+    "add": "lerna add",
+    "list": "lerna ls -la",
+    "build": "lerna run build",
+    "lint": "lerna run lint ",
+    "test": "lerna run --stream test",
+    "release": "node ./scripts/release"
+  },
+  "dependencies": {
+    "backend": "file:packages/backend"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andersonbosa/feedbacker-app.git"
+  },
+  "homepage": "https://github.com/andersonbosa/feedbacker-app#readme",
+  "bugs": {
+    "url": "https://github.com/andersonbosa/feedbacker-app/issues"
+  }
+}
