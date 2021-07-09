@@ -1,0 +1,9 @@
+{
+  "name": "feedbacker-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:andersonbosa/feedbacker-app.git",
+  "author": "andersonbosa <andersonbosa0@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
