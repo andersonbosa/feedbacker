@@ -1,0 +1,74 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    /* MULTIPLE */
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "[ALL:dev] Launch via NPM",
+      "envFile": "${workspaceFolder}/.env",
+      "port": 5858,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "prd",
+        "debug"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "[ALL:prd] Launch via NPM",
+      "envFile": "${workspaceFolder}/.env",
+      "port": 5858,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "prd",
+        "debug"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    /* API  */
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "[API:dev] Launch via NPM",
+      "cwd": "${workspaceFolder}/packages/api",
+      "envFile": "${workspaceFolder}/.env",
+      "port": 5858,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "dev",
+        "debug"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "[API:prd] Launch via NPM",
+      "cwd": "${workspaceFolder}/packages/api",
+      "envFile": "${workspaceFolder}/.env",
+      "port": 5858,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "prd",
+        "debug"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+    /* DASHBOARD */
+    /* WIDGET */
+  ]
+}

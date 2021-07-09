@@ -1,9 +1,29 @@
 {
   "name": "feedbacker-app",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:andersonbosa/feedbacker-app.git",
+  "private": true,
   "author": "andersonbosa <andersonbosa0@gmail.com>",
   "license": "MIT",
-  "private": false
+  "repository": "git@github.com:andersonbosa/feedbacker-app.git",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "lerna run dev --stream",
+    "prd": "lerna run prd --stream",
+    "release": "lerna publish",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean -y && rm -rf node_modules package-lock.json yarn.lock",
+    "reboot": "npm run clean && npm i && npm run bootstrap"
+  },
+  "dependencies": {
+    "feedbacker-api": "file:///packages/api"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">= 14.x.x"
+  }
 }
