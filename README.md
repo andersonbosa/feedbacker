@@ -8,27 +8,40 @@
 ![node package manager](https://img.shields.io/badge/npm%20client-YARN-orange)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
-#### Purpose
+#### 🪐 Purpose
 
 > Adipisicing Lorem excepteur proident labore nulla consequat exercitation officia sit ipsum aute voluptate velit. Est occaecat labore voluptate exercitation aliquip.
 
-#### [Architecture by Drawio](./architecture-api.drawio)
+#### 🚀 Getting started:
 
-### Roadmap
+- This package is to manage the development of this application. But each package **can/must** be separated on they release.
 
-- [ ] Split API into microservices with moleculer.js
-- [ ] Split dashboard into microfront-end inside same moleculer project
+##### 📜 Scripts
 
-<br/>
+<!-- !todo -->
+- `dev`:
+- `dev:<package>`:
+- `clean`:
+- `install-packages`:
+- `reinstall`:
 
-- [ ] local dependencies <!-- https://docs.npmjs.com/cli/v6/configuring-npm/package-json#local-paths -->
-  - [ ] api
-  - [ ] dashboard
-  - [ ] widget
-- [ ] setup docker environment
+
+#### 🏗️ [Architecture by Drawio](./architecture-api.drawio)
+
+#### 🗺️ Roadmap
+
+- ✨ enchantments
+  - [ ] Split API into microservices with moleculer.js
+  - [ ] Split dashboard into microfront-end inside same moleculer project
+-  todo
+  - [x] treat local dependencies to run 2gether in dev.
+    - [x] api
+    - [x] dashboard
+    - [ ] widget
+  - [ ] setup docker environment to dev. & prod.
 
 
 <br />
 <br />
 
-#### Made with ~~hate~~🧡 love by [anderson](https://github.com/andersonbosa).
+###### Made with ~~hate~~🧡 love by [Anderson](https://github.com/andersonbosa).
