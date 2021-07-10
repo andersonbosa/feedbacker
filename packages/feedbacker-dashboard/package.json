@@ -1,0 +1,33 @@
+{
+  "name": "feedbacker-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "reboot": "rm -rf yarn.lock node_modules>reboot.log && yarn",
+    "dev": "vue-cli-service serve",
+    "prd": "vue-cli-service build",
+    "docker:build": "docker build -t feedbacker-dashboard .",
+    "docker:container": "docker run -d -p 8080:8080 feedbacker-dashboard",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "core-js": "^3.6.5",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.36",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "vue-jest": "^5.0.0-0"
+  }
+}

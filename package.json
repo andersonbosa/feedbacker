@@ -10,12 +10,13 @@
     "dev": "lerna run dev --stream",
     "prd": "lerna run prd --stream",
     "release": "lerna publish",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --nohoist",
     "clean": "lerna clean -y && rm -rf node_modules package-lock.json yarn.lock",
-    "reboot": "npm run clean && npm i && npm run bootstrap"
+    "reboot": "yarn run clean && yarn && yarn run bootstrap"
   },
   "dependencies": {
-    "feedbacker-api": "file:///packages/api"
+    "feedbacker-api": "file:packages/feedbacker-api",
+    "feedbacker-dashboard": "file:packages/feedbacker-dashboard"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
