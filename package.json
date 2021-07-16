@@ -10,14 +10,17 @@
     "node": ">= 14.x.x"
   },
   "scripts": {
+    "dev:setup": "yarn clean && yarn && yarn install-packages",
     "dev": "lerna run dev --stream",
     "dev:api": "lerna exec --scope=feedbacker-api -- yarn dev",
     "dev:dashboard": "lerna exec --scope=feedbacker-dashboard -- yarn dev",
+    "eslint": "lerna run eslint --stream",
     "clean": "lerna clean -y && rm -rf node_modules package-lock.json yarn.lock",
-    "install-packages": "lerna exec -- yarn ",
-    "reinstall": "yarn clean && yarn && yarn install-packages"
+    "install-packages": "lerna exec -- yarn "
   },
   "devDependencies": {
+    "@types/vue": "^2.0.0",
+    "@types/vue-router": "^2.0.0",
     "lerna": "^4.0.0"
   }
 }

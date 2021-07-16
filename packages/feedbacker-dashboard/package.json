@@ -1,33 +1,60 @@
 {
   "name": "feedbacker-dashboard",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "reboot": "rm -rf yarn.lock node_modules>reboot.log && yarn",
     "dev": "vue-cli-service serve",
-    "prd": "vue-cli-service build",
-    "docker:build": "docker build -t feedbacker-dashboard .",
-    "docker:container": "docker run -d -p 8080:8080 feedbacker-dashboard",
+    "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "clean": "rm -rf node_modules yarn.lock"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
+    "autoprefixer": "^9",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "postcss": "8",
+    "tailwindcss": "^2.2.4",
+    "tiny-emitter": "^2.1.0",
+    "vee-validate": "^3.4.10",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vue-toastification": "^2.0.0-beta.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^2.0.0-0",
-    "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.36",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "postcss-loader": "^6.1.1",
+    "typescript": "~3.9.3",
+    "vue-cli-plugin-tailwind": "~2.0.6",
     "vue-jest": "^5.0.0-0"
+  },
+  "engines": {
+    "node": ">= 14.x.x"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }

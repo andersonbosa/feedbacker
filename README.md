@@ -1,47 +1,28 @@
-# 🗣️ feedbacker-app
+<h1 id="top">🗣️ feedbacker</h1>
+
 
 <!-- badges -->
 
-![Repo status](https://img.shields.io/badge/repo%20status-Active-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-blue)
-[![Contributions](https://img.shields.io/badge/contributions-Welcome-brightgreen.svg?style=flat)](https://github.com/andersonbosa/feedbacker-app/issues)
+[![offer by](https://img.shields.io/badge/Course%20by%20@vuejsbr-blue)](https://github.com/vuejs-br)
+![Repo status](https://img.shields.io/badge/repo%20status-Inactive-inactive)
 ![node package manager](https://img.shields.io/badge/npm%20client-YARN-orange)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+<br/>
 
-#### 🪐 Purpose
+> Projeto desenvolvido durante os estudos do [curso](https://igorhalfeld.teachable.com/courses/1283923/lectures/29447426) oferecido pela comunidade [@vuejs-br](https://github.com/vuejs-br).
 
-> Adipisicing Lorem excepteur proident labore nulla consequat exercitation officia sit ipsum aute voluptate velit. Est occaecat labore voluptate exercitation aliquip.
+> [ 🏆 Complete ](https://andersonbosa.notion.site/Treinamento-Vue3-by-vuejs-br-94b71d332fbd4628b659519f2f76fdc7)
 
-#### 🚀 Getting started:
-
-- This package is to manage the development of this application. But each package **can/must** be separated on they release.
-
-##### 📜 Scripts
+#### 📜 Scripts
 
 <!-- !todo -->
-- `dev`:
-- `dev:<package>`:
-- `clean`:
-- `install-packages`:
-- `reinstall`:
+- `dev:setup` - configura o ambiente para desenvolvimento.
+- `dev` - corre o ambiente de desenvolvimento.
+- `dev:<package>`: corre um pacote específico para desenvolvimento.
 
 
-#### 🏗️ [Architecture by Drawio](./architecture-api.drawio)
-
-#### 🗺️ Roadmap
-
-- ✨ enchantments
-  - [ ] Split API into microservices with moleculer.js
-  - [ ] Split dashboard into microfront-end inside same moleculer project
--  todo
-  - [x] treat local dependencies to run 2gether in dev.
-    - [x] api
-    - [x] dashboard
-    - [ ] widget
-  - [ ] setup docker environment to dev. & prod.
-
-
-<br />
-<br />
-
-###### Made with ~~hate~~🧡 love by [Anderson](https://github.com/andersonbosa).
+<div align="right">
+  <button style="border: 1px solid grey;  background:white;">
+    <a style="color:grey" href="#top">back2top</a>
+  </button>
+</div>
