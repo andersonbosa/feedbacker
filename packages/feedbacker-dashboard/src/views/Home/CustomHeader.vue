@@ -1,5 +1,5 @@
 <template>
-  <header class="header bg-brand-main">
+  <header class="header bg:brand-main">
     <div class="header-group">
       <div class="flex items-center justify-between py-10">
         <div class="w-28 lg:w-36">
