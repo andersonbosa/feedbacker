@@ -12,7 +12,7 @@ Object {
 exports[`AuthService should return an user when user register 1`] = `
 Object {
   "data": Object {
-    "email": "potato@gmail.com",
+    "email": "igor@igor.me",
     "name": "Igor",
     "password": "123",
   },

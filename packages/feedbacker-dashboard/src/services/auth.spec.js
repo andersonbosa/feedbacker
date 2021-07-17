@@ -14,7 +14,7 @@ describe('AuthService', () => {
       return Promise.resolve({ data: { token } })
     })
 
-    const response = await AuthService(mockAxios).login({ email: 'potato@gmail.com', password: '123' })
+    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '123' })
     expect(response.data).toHaveProperty('token')
     expect(response).toMatchSnapshot()
   })
@@ -23,7 +23,7 @@ describe('AuthService', () => {
     const user = {
       name: 'Igor',
       password: '123',
-      email: 'potato@gmail.com'
+      email: 'igor@igor.me'
     }
     mockAxios.post.mockImplementationOnce(() => {
       return Promise.resolve({ data: user })
@@ -42,7 +42,7 @@ describe('AuthService', () => {
       return Promise.resolve({ request: errors })
     })
 
-    const response = await AuthService(mockAxios).login({ email: 'potato@gmail.com', password: '123' })
+    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '123' })
     expect(response.errors).toHaveProperty('status')
     expect(response.errors).toHaveProperty('statusText')
   })

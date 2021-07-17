@@ -7,7 +7,6 @@ module.exports = {
     './src/**/*.vue',
     './src/**/*.jsx'
   ],
-  presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {

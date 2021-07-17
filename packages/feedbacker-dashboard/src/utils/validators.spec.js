@@ -25,6 +25,6 @@ describe('Validators utils', () => {
   })
 
   it('should returns true when pass a correct param', () => {
-    expect(validateEmptyAndEmail('potato@gmail.com')).toBe(true)
+    expect(validateEmptyAndEmail('igor@igor.me')).toBe(true)
   })
 })

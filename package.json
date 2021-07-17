@@ -5,9 +5,8 @@
   "private": true,
   "author": "anderson do nascimento bosa <andersonbosa0@gmail.com>",
   "repository": "git@github.com:andersonbosa/feedbacker-app.git",
-  "license": "MIT",
   "engines": {
-    "node": ">= 14.x.x"
+    "node": ">= 12.13.x"
   },
   "scripts": {
     "dev:setup": "yarn clean && yarn && yarn install-packages",
