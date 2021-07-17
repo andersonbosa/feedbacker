@@ -3,7 +3,6 @@ const palette = require('./palette')
 
 module.exports = {
   purge: { content: ['./public/**/*.html', './src/**/*.vue'] },
-  presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extends: {
