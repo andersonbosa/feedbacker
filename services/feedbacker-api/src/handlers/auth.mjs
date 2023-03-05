@@ -1,40 +1,53 @@
-// const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
-function CreateAuthHandler (db) {
+const {
+  JWT_API_SECRET,
+} = process.env
+
+const jwtOtions = {
+  expiresIn: 60 * 60
+}
+
+function CreateAuthHandler (dbClient) {
 
   async function login (ctx) {
     const { email, password } = ctx.request.body
-    console.log('🟥🟥🟥🟥🟥 3 ', email)
 
-    const user = await db.readOneByEmail('users', email)
-    // if (!user) {
-    //   ctx.status = 404
-    //   ctx.body = { error: 'Not found' }
-    //   return
-    // }
+    const user = await dbClient.readOneByEmail('users', email)
 
-    // const canLogin = () => (
-    //   user.email === email &&
-    //   user.password === password
-    // )
+    const canUserLogin = () => (
+      user.email === email && user.password === password
+    )
 
-    // if (!canLogin()) {
-    //   ctx.status = 401
-    //   ctx.body = { error: 'Unauthorized' }
-    //   return
-    // }
+    if (!canUserLogin()) {
+      ctx.status = 401
+      ctx.body = { error: 'Unauthorized' }
+      return
+    }
 
-    // const token = jwt.sign(
-    //   {
-    //     id: user.id,
-    //     email: user.email,
-    //     name: user.name
-    //   },
-    //   process.env.JWT_SECRET
-    // )
 
-    // ctx.status = 200
-    // ctx.body = { token }
+    if (!user) {
+      ctx.status = 404
+      ctx.body = { error: 'Not found' }
+      return
+    }
+
+
+    const payload = {
+      id: user.id,
+      email: user.email,
+      name: user.name
+    }
+
+
+    const userToken = jwt.sign(
+      payload,
+      JWT_API_SECRET,
+      jwtOtions
+    )
+
+    ctx.status = 200
+    ctx.body = { userToken }
   }
 
   return { login }

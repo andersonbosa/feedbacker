@@ -23,3 +23,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# feedbacker-api
+private.pem
+public.pem

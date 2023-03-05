@@ -1,2 +1,5 @@
 .now
 .vercel
+
+private.pem
+public.pem
