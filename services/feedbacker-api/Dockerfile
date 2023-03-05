@@ -8,4 +8,5 @@ COPY . /app
 WORKDIR /app
 
 RUN npm install --only=production --silent
+
 CMD npm start
