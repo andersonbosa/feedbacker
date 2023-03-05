@@ -7,7 +7,7 @@
   "scripts": {
     "debug": "nodemon --inspect=5858 ./src/index.mjs",
     "start": "node src/index.mjs",
-    "dev": "DEBUG=* JWT_SECRET=super_secret nodemon src/index.mjs",
+    "dev": "DEBUG=* nodemon src/index.mjs",
     "docker:build": "docker build -t feedbacker-api:latest .",
     "docker:run": "docker run -p 3000:3000 feedbacker-api:latest",
     "lint": "eslint --fix src/",
