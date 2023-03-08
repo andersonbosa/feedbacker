@@ -21,25 +21,29 @@
 
 <h2 id="about">💬 About</h2>
 
-This is a collection of some sample models for you to use in your projects. Among them are, for example:
+Product developed during the Vue3 course offered by the @vuejs-br community and refactored by me in 2023 
 
-* Github templates
-* Github workflows
-  * Application security testing samples
-* Style pattern
 
 <h2 id="technologies"> 🛠️ Technologies</h2>
 
 
-* [Markdown](https://www.markdownguide.org/)
-* [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG)
-* [XHTML](https://www.w3docs.com/learn-html/xhtml-extensible-hypertext-markup-language.html)
+Front-end:
+* [Nuxt3](https://nuxt.com/)
+* [Pinia](https://pinia.vuejs.org/)
+* [Tailwind](https://tailwindcss.com/)
 
+Back-end:
+* [Koa](https://koajs.com/)
+* [Nodemon](https://nodemon.io/)
+* [Eslint](https://eslint.org/)
 
+Infra:
+* [Docker](https://www.docker.com/)
+* [Docker compose](https://docs.docker.com/compose/)
 
 <h2>🚀 Deploy</h2>
 
-* Distributed here, in [Github](https://github.com/andersonbosa/dothub)
+* Distributed here, in [Github](https://github.com/andersonbosa/feedbacker)
 
 <h2 id="contribution">🤝 Contribution</h2>
 
@@ -62,10 +66,10 @@ This project is under the MIT license.
   
   <h4> Stargazers </h4>
 
-  [![Stargazers](https://reporoster.com/stars/andersonbosa/dothub)](https://github.com/andersonbosa/dothub/stargazers)
+  [![Stargazers](https://reporoster.com/stars/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/stargazers)
 
   <h4> Forkers </h4>
 
-  [![Forkers](https://reporoster.com/forks/andersonbosa/dothub)](https://github.com/andersonbosa/dothub/network/members)
+  [![Forkers](https://reporoster.com/forks/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/network/members)
   
 </details>
