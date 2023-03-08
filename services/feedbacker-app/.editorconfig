@@ -1,0 +1,17 @@
+# EditorConfig is awesome: https://EditorConfig.org
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+[*.{ts,js,vue}]
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+quote_type = single
+
+[*.md]
+trim_trailing_whitespace = false
