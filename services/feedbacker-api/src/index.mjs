@@ -5,7 +5,7 @@ import Koa from 'koa'
 import { koaBody } from 'koa-body'
 import router from './routes/index.mjs'
 
-const { PORT = 3000 } = process.env
+const { PORT = 3001 } = process.env
 
 
 /* initialize Koa */

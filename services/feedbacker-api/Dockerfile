@@ -9,4 +9,6 @@ WORKDIR /app
 
 RUN npm install --only=production --silent
 
+expose 
+
 CMD npm start
