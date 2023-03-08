@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "feedbacker-api: nodemon",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "program": "${workspaceFolder}/services/feedbacker-api/src/index.mjs",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "${workspaceFolder}/services/feedbacker-api/node_modules/nodemon/bin/nodemon.js",
+      "type": "node",
+      "envFile": "${workspaceFolder}/services/feedbacker-api/src/.env"
+    },
+    {
+      "name": "feedbacker-app: npm run dev",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "runtimeArgs": [
+        "run-script",
+        "dev"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "restart": true
+    }
+  ]
+}
