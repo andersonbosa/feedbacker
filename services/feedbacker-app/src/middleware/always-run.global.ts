@@ -1,4 +1,4 @@
 /* Middleware demonstration */
 export default defineNuxtRouteMiddleware(() => {
-  console.log('🔵 Running global middleware')
+  console.log(`🔵 Running global middleware at: ${new Date().toISOString()}`)
 })

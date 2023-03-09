@@ -1,36 +1,47 @@
-version: '3'
+version: '3.9'
 
 services:
 
-  frontend:
-    build:
-      context: ./services/feedbacker-app
-    env_file:
-      - ./services/feedbacker-app/.env
-    ports:
-      - "8080:8080"
-    networks:
-      - exposed-net
+    frontend:
+        build:
+            context: ./services/feedbacker-app
+        command: npm run dev
+        ports:
+            - 8080:8080
+            - 24678:24678
+        environment:
+            - PORT=8080
+        volumes:
+            - ./services/feedbacker-app:/app
+            - nodemodules:/app/node_modules
+        networks:
+            - exposed-net
 
-  backend:
-    build:
-      context: ./services/feedbacker-api
-    ports:
-      - "3001:3001"
-    env_file:
-      - ./services/feedbacker-api/.env
-    networks:
-      - exposed-net
-  # database:
-  #   image: mongo
-  #   restart: always
-  #   ports:
-  #     - 27017:27017
-  #   networks:
-  #     - exposed-net
+    backend:
+        build:
+            context: ./services/feedbacker-api
+        env_file:
+            - ./services/feedbacker-api/.env
+        ports:
+            - '3000:3000'
+        networks:
+            - exposed-net
+        depends_on:
+            - database
+
+    database:
+        image: mongo
+        ports:
+            - 27017:27017
+        networks:
+            - exposed-net
+        # restart: always
+
+volumes:
+    nodemodules: {}
 
 networks:
-  privated-net:
-    driver: bridge
-  exposed-net:
-    external: true
+    privated-net:
+        driver: bridge
+    exposed-net:
+        external: true

@@ -40,7 +40,7 @@ function triggerAccountLogin () {
       <!-- banner -->
       <div class="flex flex-col mt-28 ">
         <h1 class="text-4xl font-black text-white text-shadow">
-          Tenha um feedback. <br>
+          Receba feedbacks <br>
           E faça seus clientes mais <br class="hidden lg:inline-block">
           felizes!
         </h1>

@@ -3,20 +3,29 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      meta: [
+        {
+          "name": "viewport",
+          "content": "width=device-width, initial-scale=1"
+        },
+        {
+          "charset": "utf-8"
+        }
+      ],
       link: [
         {
           rel: 'icon',
-          type: 'image/x-icon',
-          href: '/favicon.ico'
+          type: 'image/png',
+          href: '/favicon.png'
         }
       ]
     }
   },
 
 
-  devServer:{
-    port: process.env.PORT || 8080
-  },
+  // devServer:{
+  //   port: process.env.PORT || 8080
+  // },
 
 
   // https://nuxt.com/docs/api/configuration/nuxt-config#srcdir

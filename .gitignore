@@ -26,7 +26,8 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# feedbacker-api
+.now
+.vercel
 private.pem
 public.pem
 
