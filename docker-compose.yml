@@ -29,13 +29,14 @@ services:
         depends_on:
             - database
 
-    database:
-        image: mongo
-        ports:
-            - 27017:27017
-        networks:
-            - exposed-net
-        # restart: always
+    # TODO implement mongo connection
+    # database:
+    #     image: mongo
+    #     ports:
+    #         - 27017:27017
+    #     networks:
+    #         - exposed-net
+    #     # restart: always
 
 volumes:
     nodemodules: {}

@@ -1,7 +1,15 @@
 # notes
 
 - its a mono repo with frontend, backend and product/widget
-- 
+- TBD
+
+# todos
+
+- [ ] após executar o feedbacker-app com `docker compose`, ao tentar executar normalmente com `npm run dev` ocorre problema de permissão
+    ```bash
+    ERROR  Cannot start nuxt:  EACCES: permission denied, open '/home/t4inha/devspace/feedbacker/services/feedbacker-app/.nuxt/nuxt.json'
+    ```
+- [ ] TBD
 
 
 # references
