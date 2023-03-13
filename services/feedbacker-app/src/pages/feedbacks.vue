@@ -10,12 +10,18 @@ import FiltersLoading from '~/components/Feedbacks/FiltersLoading.vue'
 import FeedbackCardLoading from '~/components/Feedbacks/FeedbackCard/Loading.vue'
 import FeedbackCard from '~/components/Feedbacks/FeedbackCard/index.vue'
 
-/* #TODO implement services */
-// import services from '~/utils/services/index'
+import services from '~/utils/services/index'
 
 
 const globalState = useGlobal()
 const feedbacksState = useFeedbacks()
+
+const hasFeedbacks = useState('feedbacks', () => {
+  return !feedbacksState.feedbacks.length &&
+    !globalState.isLoading &&
+    !feedbacksState.isLoadingFeedbacks &&
+    !feedbacksState.hasError
+})
 
 
 function handleErrors (error: any) {
@@ -24,18 +30,18 @@ function handleErrors (error: any) {
   feedbacksState.isLoadingFeedbacks = false
   feedbacksState.isLoadingMoreFeedback = false
   feedbacksState.hasError = !!error
-  console.log('============== errors handled')
+  console.log(' 🔴 handleErrors !')
 }
 
 async function fetchFeedbacks () {
   try {
     globalState.isLoading = true
 
-    // const { data } = await services.feedbacks.getAll({
-    //   ...feedbacksState.pagination,
-    //   type: feedbacksState.currentFeedbackType
-    // })
-    const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+    // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+    const { data } = await services.feedbacks.getAll({
+      ...feedbacksState.pagination,
+      type: feedbacksState.currentFeedbackType
+    })
 
     feedbacksState.feedbacks = data.results
     feedbacksState.pagination = data.pagination
@@ -66,11 +72,11 @@ async function changeFeedbacksType (type: string) {
     Object.assign(stateUpdates, currentState)
     Object.assign(currentState, stateUpdates)
 
-    // const { data } = await services.feedbacks.getAll({
-    //   type,
-    //   ...feedbacksState.pagination
-    // })
-    const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+    // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+    const { data } = await services.feedbacks.getAll({
+      type,
+      ...feedbacksState.pagination
+    })
 
     feedbacksState.feedbacks = data.results
     feedbacksState.pagination = data.pagination
@@ -92,12 +98,13 @@ async function handleScroll () {
 
   try {
     feedbacksState.isLoadingMoreFeedbacks = true
-    // const { data } = await services.feedbacks.getAll({
-    //   ...feedbacksState.pagination,
-    //   type: feedbacksState.currentFeedbackType,
-    //   offset: (feedbacksState.pagination.offset + 5)
-    // })
-    const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+
+    // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
+    const { data } = await services.feedbacks.getAll({
+      ...feedbacksState.pagination,
+      type: feedbacksState.currentFeedbackType,
+      offset: (feedbacksState.pagination.offset + 5)
+    })
 
     if (data.results.length) {
       feedbacksState.feedbacks.push(...data.results)
@@ -120,7 +127,7 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll, false)
 })
 
-console.log('======> 😀 src/pages/feedbacks.vue')
+console.log('🔴 src/pages/feedbacks.vue')
 </script>
 
 <template>
@@ -155,12 +162,7 @@ console.log('======> 😀 src/pages/feedbacks.vue')
           <p v-if="feedbacksState.hasError" class="text-lg text-center text-gray-800 font-regular">
             Aconteceu um erro ao carregar os feedbacks 🥺
           </p>
-          <p v-if="
-            !feedbacksState.feedbacks.length &&
-            !globalState.isLoading &&
-            !feedbacksState.isLoadingFeedbacks &&
-            !feedbacksState.hasError
-          " class="text-lg text-center text-gray-800 font-regular">
+          <p v-if="!hasFeedbacks" class="text-lg text-center text-gray-800 font-regular">
             Ainda nenhum feedback recebido 🤓
           </p>
 
@@ -174,3 +176,4 @@ console.log('======> 😀 src/pages/feedbacks.vue')
   </div>
 </template>
 
+<style ></style>

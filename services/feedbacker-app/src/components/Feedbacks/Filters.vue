@@ -4,7 +4,10 @@ import {
   IColors,
   ISummary,
   IFilter,
-} from '~~/src/lib/types.js'
+} from '~/lib/types'
+
+import { useFeedbacks } from '~/stores/feedbacks'
+import { useGlobal } from '~/stores/global'
 
 // import services from '~~/src/utils/services/index.js' /* TODO implement services */
 

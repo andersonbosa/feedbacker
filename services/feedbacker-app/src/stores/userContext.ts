@@ -1,17 +1,8 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { UserInitialState } from '~/lib/types'
 
-const userMock: UserInitialState = {
-  currentUser: {
-    name: "Anderson"
-  }
-}
-
-
 const userInitialState: UserInitialState = {
-  currentUser: {
-    ...userMock.currentUser
-  }
+  currentUser: {}
 }
 
 
