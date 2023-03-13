@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import services from '~~/src/utils/services/index.js' /* TODO implement services */
-
-/* TODO não consegui usar 1 objeto dentro de useState p criar tipo um "estado do ocmponente" centralizado num objeto*/
-const localState = useState(
-  'playground',
-  () => ({})
-)
+import services from '~/utils/services/index'
 
 const useUserInput = useState('userInput', () => '')
-const useResultOutput = useState('resultOutput', () => 'Nulla nisi aliquip aliqua reprehenderit enim velit ad magna Lorem sit labore occaecat tempor culpa.')
+const useResultOutput = useState('resultOutput', () => 'inital value')
 
-function handleSubmit () {
-  console.log(
-    '🔴🔴🔴🔴 handleSubmit',
-    localState.value,
-    useUserInput.value,
-    useResultOutput.value
-  )
+async function doThing (inputParam: any) {
+  try {
+    const { data } = await services.feedbacks.getSummary()
+    console.log('🔴🔴🔴🔴 doThing')
+    console.log(data)
 
-  useResultOutput.value = useUserInput.value
+
+    return inputParam
+  } catch (error) {
+    throw error
+  }
+}
+
+async function handleSubmit () {
+  const wantedResult = await doThing(useUserInput.value)
+
+  useResultOutput.value = wantedResult
 }
 </script>
 
@@ -45,7 +47,7 @@ function handleSubmit () {
     <div class="bg-orange-100 border-t-4 border-orange-500 rounded-b text-orange-900 px-4 py-3 shadow-md mt-6">
       <p class="font-bold">Results:</p>
       <p disabled cols="30" rows="10">
-      {{ useResultOutput }}
+        {{ useResultOutput }}
       </p>
     </div>
   </div>

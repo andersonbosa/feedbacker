@@ -2,29 +2,45 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "feedbacker-api: nodemon",
+      "name": "1 feedbacker-api: nodemon",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "program": "${workspaceFolder}/services/feedbacker-api/src/index.mjs",
       "request": "launch",
       "restart": true,
-      "runtimeExecutable": "${workspaceFolder}/services/feedbacker-api/node_modules/nodemon/bin/nodemon.js",
       "type": "node",
-      "envFile": "${workspaceFolder}/services/feedbacker-api/src/.env"
+      "program": "${workspaceFolder}/services/feedbacker-api/src/index.mjs",
+      "runtimeExecutable": "${workspaceFolder}/services/feedbacker-api/node_modules/nodemon/bin/nodemon.js",
+      "envFile": "${workspaceFolder}/services/feedbacker-api/.env"
     },
     {
-      "name": "feedbacker-app: npm run dev",
+      "name": "2 feedbacker-app: nuxi dev: NOK",
       "request": "launch",
       "console": "integratedTerminal",
-      "runtimeArgs": [
-        "run-script",
-        "dev"
-      ],
-      "runtimeExecutable": "npm",
       "skipFiles": [
         "<node_internals>/**"
       ],
       "type": "node",
+      "restart": true,
+      "program": "${workspaceFolder}/services/feedbacker-app/src/",
+      // "runtimeExecutable": "npm",
+      "runtimeExecutable": "${workspaceFolder}/services/feedbacker-app/node_modules/nuxi/bin/nuxi.mjs",
+      "runtimeArgs": [
+        "dev"
+      ],
+      "envFile": "${workspaceFolder}/services/feedbacker-app/.env"
+    },
+    {
+      "name": "3 feedbacker-app: npm run dev",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "type": "node",
+      "skipFiles": [ "<node_internals>/**" ],
+      "cwd": "${workspaceFolder}/services/feedbacker-app",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "restart": true
     }
   ]
