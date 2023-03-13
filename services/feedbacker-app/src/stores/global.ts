@@ -1,4 +1,4 @@
-import { FilterInterface } from './../utils/interfaces'
+import { IFilter } from '../lib/types'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 export const useGlobal = defineStore('global', {

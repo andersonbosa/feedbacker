@@ -1,3 +1,6 @@
+//https://nuxt.com/docs/bridge/bridge-composition-api#userouter-and-useroute
+// import { defineNuxtConfig } from '@nuxt/bridge'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
@@ -63,7 +66,10 @@ export default defineNuxtConfig({
 
   // https://nuxt.com/docs/api/configuration/nuxt-config/#imports
   imports: {
-    dirs: ['./stores'],
+    dirs: [
+      '~/stores',
+      // '~/utils/services' # BUGA
+    ],
   },
 
 
@@ -104,7 +110,16 @@ export default defineNuxtConfig({
   },
 
 
+  // https://nuxt.com/docs/guide/going-further/runtime-config#exposing-runtime-config
+  runtimeConfig: {
+  },
+
+  sourcemap: {
+    server: true,
+    client: true
+  },
+
   // https://nuxt.com/docs/api/configuration/nuxt-config#debug
-  // debug: true,
+  debug: true,
   experimental: { writeEarlyHints: true }
 })

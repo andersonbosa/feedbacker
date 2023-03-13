@@ -26,8 +26,8 @@ services:
             - '3000:3000'
         networks:
             - exposed-net
-        depends_on:
-            - database
+        # depends_on:
+        #     - database
 
     # TODO implement mongo connection
     # database:

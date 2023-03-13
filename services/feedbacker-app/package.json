@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "NODE_OPTIONS=--trace-warnings nuxt dev",
+    "dev": "nuxt dev",
+    "devw": "NODE_OPTIONS=--trace-warnings nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

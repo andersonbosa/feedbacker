@@ -12,29 +12,30 @@
       "runtimeExecutable": "${workspaceFolder}/services/feedbacker-api/node_modules/nodemon/bin/nodemon.js",
       "envFile": "${workspaceFolder}/services/feedbacker-api/.env"
     },
-    {
-      "name": "2 feedbacker-app: nuxi dev: NOK",
-      "request": "launch",
-      "console": "integratedTerminal",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node",
-      "restart": true,
-      "program": "${workspaceFolder}/services/feedbacker-app/src/",
-      // "runtimeExecutable": "npm",
-      "runtimeExecutable": "${workspaceFolder}/services/feedbacker-app/node_modules/nuxi/bin/nuxi.mjs",
-      "runtimeArgs": [
-        "dev"
-      ],
-      "envFile": "${workspaceFolder}/services/feedbacker-app/.env"
-    },
+    // {
+    //   "name": "2 feedbacker-app: nuxi dev: NOK",
+    //   "request": "launch",
+    //   "console": "integratedTerminal",
+    //   "skipFiles": [
+    //     "<node_internals>/**"
+    //   ],
+    //   "type": "node",
+    //   "restart": true,
+    //   "program": "${workspaceFolder}/services/feedbacker-app/src/",
+    //   // "runtimeExecutable": "npm",
+    //   "runtimeExecutable": "${workspaceFolder}/services/feedbacker-app/node_modules/.bin/nuxi",
+    //   "runtimeArgs": [
+    //     "build --preview"
+    //   ],
+    // },
     {
       "name": "3 feedbacker-app: npm run dev",
       "request": "launch",
       "console": "integratedTerminal",
       "type": "node",
-      "skipFiles": [ "<node_internals>/**" ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "cwd": "${workspaceFolder}/services/feedbacker-app",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
@@ -42,6 +43,33 @@
         "dev"
       ],
       "restart": true
-    }
+    },
+    {
+      "name": "client: chrome",
+      "type": "chrome",
+      "request": "launch",
+      "webRoot": "${workspaceFolder}/services/feedbacker-app/.nuxt",
+      "cwd": "${workspaceFolder}/services/feedbacker-app",
+      "url": "http://localhost:8080/_playground",
+    },
+    {
+      "name": "server: nuxt",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "dev"
+      ],
+      "cwd": "${workspaceFolder}/services/feedbacker-app",
+      "program": "${workspaceFolder}/services/feedbacker-app/node_modules/.bin/nuxt"
+    },
+  ],
+  "compounds": [
+    {
+      "name": "fullstack: nuxt",
+      "configurations": [
+        "server: nuxt",
+        "client: chrome"
+      ]
+    },
   ]
 }

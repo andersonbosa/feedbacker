@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
   LabelsInterface,
-  ColorsInterface,
-  SummaryInterface,
-  FilterInterface,
+  IColors,
+  ISummary,
+  IFilter,
 } from '~~/src/lib/types.js'
 
 // import services from '~~/src/utils/services/index.js' /* TODO implement services */
@@ -20,7 +20,7 @@ const LABELS: LabelsInterface = {
   other: 'Outros',
 }
 
-const COLORS: ColorsInterface = {
+const COLORS: IColors = {
   all: { text: 'text-brand-info', bg: 'bg-brand-info' },
   issue: { text: 'text-brand-danger', bg: 'bg-brand-danger' },
   idea: { text: 'text-brand-warning', bg: 'bg-brand-warning' },
@@ -28,9 +28,9 @@ const COLORS: ColorsInterface = {
 }
 
 
-function applyFiltersStructure (summary: SummaryInterface) {
-  return Object.keys(summary).reduce((acc: Array<FilterInterface>, cur) => {
-    const currentFilter: FilterInterface = {
+function applyFiltersStructure (summary: ISummary) {
+  return Object.keys(summary).reduce((acc: Array<IFilter>, cur) => {
+    const currentFilter: IFilter = {
       label: LABELS[cur],
       color: COLORS[cur],
       amount: summary[cur],
