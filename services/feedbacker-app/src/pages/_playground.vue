@@ -7,7 +7,7 @@ import services from '~/utils/services/index'
 const useUserInput = useState('userInput', () => '')
 const useResultOutput = useState('resultOutput', () => 'inital value')
 
-async function doThing (inputParam: any) {
+async function processUserInput (inputParam: any) {
   try {
     const { data } = await services.feedbacks.getSummary()
 
@@ -18,7 +18,7 @@ async function doThing (inputParam: any) {
 }
 
 async function handleSubmit () {
-  const wantedResult = await doThing(useUserInput.value)
+  const wantedResult = await processUserInput(useUserInput.value)
 
   useResultOutput.value = wantedResult
 }

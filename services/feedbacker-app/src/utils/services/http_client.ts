@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 import { useGlobal } from '~/stores/global'
 
 const globalState = useGlobal()
