@@ -2,10 +2,7 @@
 import Filters from '~/components/Feedbacks/Filters.vue';
 console.log('😀 src/pages/feedbacks.vue');
 
-// import FiltersLoading from './FiltersLoading'
-// import HeaderLogged from '../../components/HeaderLogged'
-// import FeedbackCard from '../../components/FeedbackCard'
-// import FeedbackCardLoading from '../../components/FeedbackCard/Loading'
+import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
 // import services from '~/utils/services/index'
 
 const globalState = useGlobal();
@@ -104,7 +101,7 @@ onUnmounted(() => {
 <template>
   <div>
     <div class="flex justify-center w-full h-28 bg-brand-main">
-      <header-logged />
+      <HeaderLogged />
     </div>
 
     <div class="flex flex-col items-center justify-center h-64 bg-brand-gray">
