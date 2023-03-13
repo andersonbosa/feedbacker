@@ -16,21 +16,15 @@ import services from '~/utils/services/index'
 const globalState = useGlobal()
 const feedbacksState = useFeedbacks()
 
-const hasFeedbacks = useState('feedbacks', () => {
-  return !feedbacksState.feedbacks.length &&
-    !globalState.isLoading &&
-    !feedbacksState.isLoadingFeedbacks &&
-    !feedbacksState.hasError
-})
 
 
 function handleErrors (error: any) {
-  globalState.isLoading = false
+  console.error(' 🔴 handleErrors !', error)
 
+  globalState.isLoading = false
   feedbacksState.isLoadingFeedbacks = false
   feedbacksState.isLoadingMoreFeedback = false
   feedbacksState.hasError = !!error
-  console.log(' 🔴 handleErrors !')
 }
 
 async function fetchFeedbacks () {
@@ -69,14 +63,12 @@ async function changeFeedbacksType (type: string) {
       pagination: {},
     }
 
-    Object.assign(stateUpdates, currentState)
-    Object.assign(currentState, stateUpdates)
+
+    const payload = { type, ...feedbacksState.pagination }
+    // const payload = { currentState, ...stateUpdates }
 
     // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
-    const { data } = await services.feedbacks.getAll({
-      type,
-      ...feedbacksState.pagination
-    })
+    const { data } = await services.feedbacks.getAll(payload)
 
     feedbacksState.feedbacks = data.results
     feedbacksState.pagination = data.pagination
@@ -159,10 +151,15 @@ console.log('🔴 src/pages/feedbacks.vue')
 
         </div>
         <div class="px-10 pt-20 col-span-3">
-          <p v-if="feedbacksState.hasError" class="text-lg text-center text-gray-800 font-regular">
+          <p v-if="!!feedbacksState.hasError" class="text-lg text-center text-gray-800 font-regular">
             Aconteceu um erro ao carregar os feedbacks 🥺
           </p>
-          <p v-if="!hasFeedbacks" class="text-lg text-center text-gray-800 font-regular">
+          <p v-if="
+            !feedbacksState.feedbacks.length &&
+            !globalState.isLoading &&
+            !feedbacksState.isLoadingFeedbacks &&
+            !feedbacksState.hasError
+          " class="text-lg text-center text-gray-800 font-regular">
             Ainda nenhum feedback recebido 🤓
           </p>
 
@@ -176,4 +173,4 @@ console.log('🔴 src/pages/feedbacks.vue')
   </div>
 </template>
 
-<style ></style>
+<style lang="postcss"></style>

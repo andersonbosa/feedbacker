@@ -4,7 +4,6 @@ import { useGlobal } from '~/stores/global'
 const globalState = useGlobal()
 // const router = useRouter()
 
-const LOCAL_STORAGE_TOKEN_NAME = 'token'
 
 const authorizationHeader = {
   name: 'Authorization',

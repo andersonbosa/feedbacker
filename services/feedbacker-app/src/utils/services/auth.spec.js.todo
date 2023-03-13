@@ -1,5 +1,6 @@
 import mockAxios from 'axios'
 import AuthService from './auth'
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 
 jest.mock('axios')
 
@@ -15,7 +16,7 @@ describe('AuthService', () => {
     })
 
     const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '123' })
-    expect(response.data).toHaveProperty('token')
+    expect(response.data).toHaveProperty(LOCAL_STORAGE_TOKEN_NAME)
     expect(response).toMatchSnapshot()
   })
 

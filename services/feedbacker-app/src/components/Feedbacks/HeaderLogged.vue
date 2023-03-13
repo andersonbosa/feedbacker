@@ -25,32 +25,20 @@
 
 <script setup lang="ts">
 import { useUserContext } from '~/stores/userContext'
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 
 const userStore = useUserContext()
 
-/* DONE não ta dando bom de usar a `useState` para exibir logoutLabel */
-// // const [logoutLabel, setLogoutLabel] = useState('')
-// const logoutLabel = useState('', function providesInitialValue () {
-//   debugger
-//   if (!userStore.currentUser.name) {
-//     return 'nouser'
-//   }
-
-//   // return `${userStore.currentUser.name} (sair)`
-//   return 'user'
-// })
-// const logoutLabel = computed(() => {
-// })
 const logoutLabel = useState<string>('logoutLabel', () => {
   if (!userStore.currentUser.name) {
-    return 'nouser'
+    return 'Login'
   }
 
   return `${userStore.currentUser.name} (sair)`
 })
 
 function handleLogout () {
-  window.localStorage.removeItem('token')
+  window.localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
 
   userStore.cleanCurrentUser()
   goToHome()

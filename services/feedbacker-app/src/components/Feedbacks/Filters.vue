@@ -65,20 +65,11 @@ function handleSelect ({ type }: string) {
   // emit('select', type) // TODO implement emit
 }
 
-// export default {
-//   async setup (_, { emit }) {
-//     const store = useSomeStore('Global')
-//     const state = reactive({
-//       hasError: false,
-//       filters: [
-//         { label: null, amount: null }
-//       ]
-//     })
 
 try {
   /* #TODO #TOFIX IMPEDITIVO filtros não aparecem por não haver "summarys"  */
-  // const { data } = await services.feedbacks.getSummary()
-  const data = {}
+  // const data = {}
+  const { data } = await services.feedbacks.getSummary()
   globalState.filters = applyFiltersStructure(data)
 } catch (error) {
   feedbacksState.hasError = !!error
@@ -101,14 +92,12 @@ try {
       }" class="flex items-center justify-between px-4 py-1 rounded cursor-pointer">
         <div class="flex items-center">
           <span />
-          <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full">
-            {{ filter.label }}
-          </span>
+          <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full"> </span>
+          {{ filter.label }}
         </div>
         <span>
-          <span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold">
-            {{ filter.amount }}
-          </span>
+          <span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold"> </span>
+          {{ filter.amount }}
         </span>
       </li>
     </ul>

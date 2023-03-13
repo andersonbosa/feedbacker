@@ -3,9 +3,9 @@ import AuthService from './auth'
 import FeedbacksService from './feedbacks'
 import UsersService from './users'
 
-// const httpClient = undefined
 
-console.log('🟢 using services')
+console.log('🟢 Using services')
+
 
 export default {
   auth: AuthService(httpClient),

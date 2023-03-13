@@ -68,7 +68,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       '~/stores',
-      // '~/utils/services' # BUGA
+      // '~/utils/services/index' // #BUGA
     ],
   },
 
