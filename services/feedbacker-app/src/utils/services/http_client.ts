@@ -1,66 +1,72 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 import { useGlobal } from '~/stores/global'
 
-const globalState = useGlobal()
-// const router = useRouter()
-
-
-const authorizationHeader = {
-  name: 'Authorization',
-  prefix: 'Bearer'
+export interface HttpClientInterface {
+  get<T> (url: string, params?: any): Promise<AxiosResponse<T>>
+  post<T> (url: string, body: any): Promise<AxiosResponse<T>>
 }
 
-// https://axios-http.com/docs/instance
-const axiosConfig = {
-  /* #TODO dynamic URL based on env*/
-  baseURL: 'http://localhost:3000',
-  timeout: 5000,
-  headers: {
-    [authorizationHeader.name]: ''
+export class HttpClient implements HttpClientInterface {
+  private axios = axios.create({
+    /* #TODO dynamic URL based on env*/
+    baseURL: 'http://localhost:3000',
+    timeout: 5000,
+    headers: {}
+  });
+
+  constructor() {
+    this.axios.interceptors.request.use((config: AxiosRequestConfig) => {
+      const globalState = useGlobal()
+      globalState.setGlobalLoading(true)
+
+      const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
+
+      return config
+    })
+
+    this.axios.interceptors.response.use(
+      (response: AxiosResponse) => {
+        const globalState = useGlobal()
+        globalState.setGlobalLoading(false)
+        return response
+      },
+      (error: any) => {
+        const canThrowAnError = error.request.status === 0 || error.request.status === 500
+
+        if (canThrowAnError) {
+          const globalState = useGlobal()
+          globalState.setGlobalLoading(false)
+          throw new Error(error.message)
+        }
+
+        if (error.response.status === 401) {
+          // router.push('/')
+          // navigateTo('/feedbacks')
+          // window.location.pathname = '/'
+          throw 'to implement: go to home'
+        }
+
+        const globalState = useGlobal()
+        globalState.setGlobalLoading(false)
+        return error
+      }
+    )
+  }
+
+  async get<T> (url: string, params?: any): Promise<AxiosResponse<T>> {
+    return this.axios.get(url, params)
+  }
+
+  async post<T> (url: string, body: any): Promise<AxiosResponse<T>> {
+    return this.axios.post(url, body)
   }
 }
 
-const httpClient = axios.create(axiosConfig)
-
-httpClient.interceptors.request.use(
-  _config => {
-    globalState.setGlobalLoading(true)
-
-    const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
-    if (token) {
-      _config.headers = Object.assign(_config.headers, {
-        [authorizationHeader.name]: `${authorizationHeader.prefix} ${token}`
-      })
-    }
-
-    return _config
-  }
-)
-
-httpClient.interceptors.response.use(
-  (_response) => {
-    globalState.setGlobalLoading(false)
-    return _response
-  },
-  (_error) => {
-    const canThrowAnError = _error.request.status === 0 || _error.request.status === 500
-
-    if (canThrowAnError) {
-      globalState.setGlobalLoading(false)
-      throw new Error(_error.message)
-    }
-
-    if (_error.response.status === 401) {
-      // router.push('/')
-      // navigateTo('/feedbacks')
-      // window.location.pathname = '/'
-      throw 'to implement: go to home'
-    }
-
-    globalState.setGlobalLoading(false)
-    return _error
-  }
-)
+const httpClient = new HttpClient()
 
 export default httpClient

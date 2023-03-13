@@ -6,8 +6,8 @@ import {
   IFilter,
 } from '~/lib/types'
 
-import { useFeedbacks } from '~/stores/feedbacks'
 import { useGlobal } from '~/stores/global'
+import { useFeedbacks } from '~/stores/feedbacks'
 
 import services from '~/utils/services/index'
 
@@ -29,15 +29,17 @@ const COLORS: IColors = {
   idea: { text: 'text-brand-warning', bg: 'bg-brand-warning' },
   other: { text: 'text-brand-graydark', bg: 'bg-brand-graydark' },
 }
-
+const initialFiltersState = { all: 0, issue: 0, idea: 0, other: 0, }
 
 function applyFiltersStructure (summary: ISummary) {
+  console.log(' 🔴🔴🔴🔴🔴 summary', summary)
   return Object.keys(summary).reduce((acc: Array<IFilter>, cur) => {
     const currentFilter: IFilter = {
       label: LABELS[cur],
       color: COLORS[cur],
       amount: summary[cur],
     }
+    // debugger
 
     if (cur === 'all') {
       currentFilter.active = true
@@ -49,13 +51,16 @@ function applyFiltersStructure (summary: ISummary) {
   }, [])
 }
 
-function handleSelect ({ type }: string) {
+function handleSelect ({ type }) {
+  console.log(' 🔴🔴🔴🔴🔴 handleSelect', type)
   if (globalState.isLoading) {
+    console.warn('globalState.isLoading')
     return
   }
 
   globalState.filters = globalState.filters.map((filter) => {
     if (filter.type === type) {
+      console.warn('filter.type === type')
       return { ...filter, active: true }
     }
 
@@ -65,21 +70,23 @@ function handleSelect ({ type }: string) {
   // emit('select', type) // TODO implement emit
 }
 
+async function setFilters () {
+  try {
+    const { data } = await services.feedbacks.getSummary()
+    globalState.filters = applyFiltersStructure(data)
 
-try {
-  /* #TODO #TOFIX IMPEDITIVO filtros não aparecem por não haver "summarys"  */
-  // const data = {}
-  const { data } = await services.feedbacks.getSummary()
-  globalState.filters = applyFiltersStructure(data)
-} catch (error) {
-  feedbacksState.hasError = !!error
-  globalState.filters = applyFiltersStructure({
-    all: 0,
-    issue: 0,
-    idea: 0,
-    other: 0,
-  })
+  } catch (error) {
+    console.log(' 🔴🔴🔴🔴🔴 setFilters has error', error)
+    feedbacksState.hasError = !!error
+    globalState.filters = applyFiltersStructure(initialFiltersState)
+
+  }
+  console.log(' 🔴🔴🔴🔴🔴 setFilters', globalState.filters)
 }
+
+onMounted(() => {
+  setFilters()
+})
 </script>
 
 <template>

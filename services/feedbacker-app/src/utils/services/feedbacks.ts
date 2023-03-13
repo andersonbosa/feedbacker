@@ -6,11 +6,7 @@ const defaultPagination = {
 }
 
 export default (httpClient) => ({
-  getAll: async ({
-    type,
-    limit,
-    offset,
-  }: PayloadGetAll = defaultPagination): Promise<{ data: any }> => {
+  getAll: async ({ type, limit, offset, }: PayloadGetAll = defaultPagination): Promise<{ data: any }> => {
     const query = { limit, offset }
     if (type) {
       query.type = type
