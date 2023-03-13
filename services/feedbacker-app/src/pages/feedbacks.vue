@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, onErrorCaptured } from 'vue'
 
+import { PayloadGetAll } from '~/lib/types'
+
 import { useGlobal } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
 
@@ -44,28 +46,19 @@ async function fetchFeedbacks () {
   }
 }
 
-async function changeFeedbacksType (type: string) {
+
+async function updateFeedbacksTypeFilter (type: string) {
   try {
-    console.log(' 🔴 changeFeedbacksType ', type)
+    console.log(' 🔴 updateFeedbacksTypeFilter ', type)
 
-    const stateUpdates = {
-      currentFeedbackType: type,
-      isLoadingFeedbacks: true,
-      pagination: {
-        offset: 0,
-        limit: 5,
-      },
+    feedbacksState.isLoadingFeedbacks = true
+    feedbacksState.pagination.offset = 0
+    feedbacksState.pagination.limit = 5
+    feedbacksState.currentFeedbackType = type
+
+    const payload: PayloadGetAll = {
+      type, ...feedbacksState.pagination
     }
-
-    const currentState = {
-      isLoadingFeedbacks: false,
-      pagination: {},
-    }
-
-    // const payload = { type, ...feedbacksState.pagination }
-    const payload = Object.assign(currentState, stateUpdates)
-
-    // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
     const { data } = await services.feedbacks.getAll(payload)
 
     feedbacksState.feedbacks = data.results
@@ -123,7 +116,8 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll, false)
 })
 
-console.log('🔴 src/pages/feedbacks.vue')
+
+console.log(' 🔵 src/pages/feedbacks.vue')
 </script>
 
 <template>
@@ -146,7 +140,7 @@ console.log('🔴 src/pages/feedbacks.vue')
 
           <suspense>
             <template #default>
-              <Filters id="filters" @select="changeFeedbacksType"
+              <Filters @select="updateFeedbacksTypeFilter"
                 class="mt-8 animate__animated animate__fadeIn animate__faster" />
             </template>
             <template #fallback>

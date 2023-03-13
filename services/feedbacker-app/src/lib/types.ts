@@ -33,3 +33,11 @@ export interface IFilter {
 export interface ISummary {
   [key: string]: any
 }
+
+/* ======================================= */
+
+export interface PayloadGetAll {
+  type?: string
+  limit?: number
+  offset?: number
+}

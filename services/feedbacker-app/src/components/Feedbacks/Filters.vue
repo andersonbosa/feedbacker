@@ -9,7 +9,7 @@ import {
 import { useFeedbacks } from '~/stores/feedbacks'
 import { useGlobal } from '~/stores/global'
 
-// import services from '~~/src/utils/services/index.js' /* TODO implement services */
+import services from '~/utils/services/index'
 
 
 const feedbacksState = useFeedbacks()
