@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, onErrorCaptured } from 'vue'
 
 import { useGlobal } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
@@ -12,11 +12,8 @@ import FeedbackCard from '~/components/Feedbacks/FeedbackCard/index.vue'
 
 import services from '~/utils/services/index'
 
-
 const globalState = useGlobal()
 const feedbacksState = useFeedbacks()
-
-
 
 function handleErrors (error: any) {
   console.error(' 🔴 handleErrors !', error)
@@ -26,6 +23,7 @@ function handleErrors (error: any) {
   feedbacksState.isLoadingMoreFeedback = false
   feedbacksState.hasError = !!error
 }
+onErrorCaptured(handleErrors)
 
 async function fetchFeedbacks () {
   try {
@@ -34,7 +32,7 @@ async function fetchFeedbacks () {
     // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
     const { data } = await services.feedbacks.getAll({
       ...feedbacksState.pagination,
-      type: feedbacksState.currentFeedbackType
+      type: feedbacksState.currentFeedbackType,
     })
 
     feedbacksState.feedbacks = data.results
@@ -48,6 +46,7 @@ async function fetchFeedbacks () {
 
 async function changeFeedbacksType (type: string) {
   try {
+    console.log(' 🔴 changeFeedbacksType ', type)
 
     const stateUpdates = {
       currentFeedbackType: type,
@@ -63,9 +62,8 @@ async function changeFeedbacksType (type: string) {
       pagination: {},
     }
 
-
-    const payload = { type, ...feedbacksState.pagination }
-    // const payload = { currentState, ...stateUpdates }
+    // const payload = { type, ...feedbacksState.pagination }
+    const payload = Object.assign(currentState, stateUpdates)
 
     // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
     const { data } = await services.feedbacks.getAll(payload)
@@ -83,19 +81,25 @@ async function handleScroll () {
     Math.ceil(document.documentElement.scrollTop + window.innerHeight) >=
     document.documentElement.scrollHeight
 
-  if (globalState.isLoading || feedbacksState.isLoadingMoreFeedbacks) return
-  if (!isBottomOfWindow) return
-  if (feedbacksState.feedbacks.length >= feedbacksState.pagination.total)
+  if (globalState.isLoading || feedbacksState.isLoadingMoreFeedbacks) {
     return
+  }
+  if (!isBottomOfWindow) {
+    return
+  }
+  if (feedbacksState.feedbacks.length >= feedbacksState.pagination.total) {
+    return
+  }
 
   try {
+    console.log(' 🔴 handleScroll ', isBottomOfWindow)
     feedbacksState.isLoadingMoreFeedbacks = true
 
     // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
     const { data } = await services.feedbacks.getAll({
       ...feedbacksState.pagination,
       type: feedbacksState.currentFeedbackType,
-      offset: (feedbacksState.pagination.offset + 5)
+      offset: feedbacksState.pagination.offset + 5,
     })
 
     if (data.results.length) {
@@ -142,13 +146,13 @@ console.log('🔴 src/pages/feedbacks.vue')
 
           <suspense>
             <template #default>
-              <Filters @select="changeFeedbacksType" class="mt-8 animate__animated animate__fadeIn animate__faster" />
+              <Filters id="filters" @select="changeFeedbacksType"
+                class="mt-8 animate__animated animate__fadeIn animate__faster" />
             </template>
             <template #fallback>
-              <FiltersLoading class="mt-8" />
+              <FiltersLoading id="filtersloading" class="mt-8" />
             </template>
           </suspense>
-
         </div>
         <div class="px-10 pt-20 col-span-3">
           <p v-if="!!feedbacksState.hasError" class="text-lg text-center text-gray-800 font-regular">
@@ -164,7 +168,7 @@ console.log('🔴 src/pages/feedbacks.vue')
           </p>
 
           <FeedbackCardLoading v-if="globalState.isLoading || feedbacksState.isLoadingFeedbacks" />
-          <feedback-card v-else v-for="(feedback, index) in feedbacksState.feedbacks" :key="feedback.id"
+          <FeedbackCard v-else v-for="(feedback, index) in feedbacksState.feedbacks" :key="feedback.id"
             :is-opened="index === 0" :feedback="feedback" class="mb-8" />
           <FeedbackCardLoading v-if="feedbacksState.isLoadingMoreFeedbacks" />
         </div>
@@ -173,4 +177,12 @@ console.log('🔴 src/pages/feedbacks.vue')
   </div>
 </template>
 
-<style lang="postcss"></style>
+<style lang="postcss">
+#filters {
+  border: 1px solid #0d4fae;
+}
+
+#filtersloading {
+  border: 3px solid #d3ff23;
+}
+</style>

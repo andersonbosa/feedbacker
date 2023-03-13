@@ -31,7 +31,7 @@ const userStore = useUserContext()
 
 const logoutLabel = useState<string>('logoutLabel', () => {
   if (!userStore.currentUser.name) {
-    return 'Login'
+    return 'Entrar'
   }
 
   return `${userStore.currentUser.name} (sair)`
