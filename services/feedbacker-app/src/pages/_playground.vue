@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
 import services from '~/utils/services/index'
-console.log('🟠  playground.vue querendo "services"')
-/* TODO não consegui usar 1 objeto dentro de useState p criar tipo um "estado do ocmponente" centralizado num objeto*/
-const usePlayground = useState('playground', () => { })
+
+// /* TODO não consegui usar 1 objeto dentro de useState p criar tipo um "estado do ocmponente" centralizado num objeto*/
+// const usePlayground = useState('playground', () => { })
 
 const useUserInput = useState('userInput', () => '')
 const useResultOutput = useState('resultOutput', () => 'inital value')
@@ -11,11 +10,8 @@ const useResultOutput = useState('resultOutput', () => 'inital value')
 async function doThing (inputParam: any) {
   try {
     const { data } = await services.feedbacks.getSummary()
-    console.log('🔴🔴🔴🔴 doThing')
-    console.log(data)
 
-
-    return inputParam
+    return data
   } catch (error) {
     throw error
   }

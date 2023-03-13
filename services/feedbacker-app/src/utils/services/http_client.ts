@@ -1,21 +1,23 @@
 import axios from 'axios'
 import { useGlobal } from '~/stores/global'
 
-// const { API_KEY = undefined } = useRuntimeConfig()
-
 const globalState = useGlobal()
 // const router = useRouter()
 
-const authorizationHeaderName = 'Authorization'
+const LOCAL_STORAGE_TOKEN_NAME = 'token'
+
+const authorizationHeader = {
+  name: 'Authorization',
+  prefix: 'Bearer'
+}
 
 // https://axios-http.com/docs/instance
 const axiosConfig = {
-  baseURL: 'http://localhost:3000', /* #TODO dynamic URL based on env*/
-  timeout: 1000,
+  /* #TODO dynamic URL based on env*/
+  baseURL: 'http://localhost:3000',
+  timeout: 5000,
   headers: {
-    common: {
-      [authorizationHeaderName]: ''
-    }
+    [authorizationHeader.name]: ''
   }
 }
 
@@ -24,13 +26,12 @@ const httpClient = axios.create(axiosConfig)
 httpClient.interceptors.request.use(
   _config => {
     globalState.setGlobalLoading(true)
-    const token = window.localStorage.getItem('token')
 
+    const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
     if (token) {
-      console.log('===== token')
-      console.log(token)
-
-      _config.headers.common.Authorization = `Bearer ${token}`
+      _config.headers = Object.assign(_config.headers, {
+        [authorizationHeader.name]: `${authorizationHeader.prefix} ${token}`
+      })
     }
 
     return _config
@@ -43,8 +44,6 @@ httpClient.interceptors.response.use(
     return _response
   },
   (_error) => {
-    console.log('======= error', _error)
-
     const canThrowAnError = _error.request.status === 0 || _error.request.status === 500
 
     if (canThrowAnError) {
@@ -54,7 +53,9 @@ httpClient.interceptors.response.use(
 
     if (_error.response.status === 401) {
       // router.push('/')
-      throw 'to implement'
+      // navigateTo('/feedbacks')
+      // window.location.pathname = '/'
+      throw 'to implement: go to home'
     }
 
     globalState.setGlobalLoading(false)
