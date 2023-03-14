@@ -5,6 +5,9 @@ import { useGlobal } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
 import services from '~/utils/services/index'
 
+/* TOFIX falta comportamentos abaixo
+atualizar lista dos feedbacks baseado no filtro selecionado
+*/
 
 const feedbacksState = useFeedbacks()
 const globalState = useGlobal()
