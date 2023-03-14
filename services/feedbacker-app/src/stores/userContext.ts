@@ -1,14 +1,14 @@
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
+import { reactive } from 'vue'
 import { UserInitialState } from '~/lib/types'
 
 const userInitialState: UserInitialState = {
   currentUser: {}
 }
 
-
-export const useUserContext = defineStore('userContext', {
-  state: () => ({
-    ...userInitialState
+export const useUserContext: any = defineStore('userContext', {
+  state: () => reactive({
+    currentUser: userInitialState.currentUser
   }),
 
   getters: {
@@ -16,8 +16,8 @@ export const useUserContext = defineStore('userContext', {
 
   actions: {
     resetUserStore () {
-      this.$reset()
-      // this = {} // wont work
+      // this.$reset()
+      this.state = reactive(userInitialState)
     },
 
     cleanCurrentUser () {

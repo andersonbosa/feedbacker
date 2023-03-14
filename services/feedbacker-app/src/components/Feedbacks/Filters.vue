@@ -65,6 +65,7 @@ async function initializeFilters () {
     globalState.filters = applyFiltersStructure(data)
 
   } catch (error) {
+    /* TOFIX undefined */
     console.error(error)
 
     feedbacksState.hasError = !!error
@@ -89,6 +90,7 @@ onMounted(() => {
       }" class="flex items-center justify-between px-4 py-1 rounded cursor-pointer">
         <div class="flex items-center">
           <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full"></span>
+          <!-- a cor não está funcionando -->
           {{ filter.label }}
         </div>
         <span>

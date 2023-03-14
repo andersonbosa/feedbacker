@@ -42,14 +42,12 @@ class HttpClient implements HttpClientInterface {
         if (canThrowAnError) {
           const globalState = useGlobal()
           globalState.setGlobalLoading(false)
-          throw new Error(error.message)
+
         }
 
         if (error.response.status === 401) {
-          // router.push('/')
-          // navigateTo('/feedbacks')
-          // window.location.pathname = '/'
-          throw 'to implement: go to home'
+          useRouter().push('/')
+          throw new Error(error.message)
         }
 
         const globalState = useGlobal()

@@ -89,13 +89,14 @@ async function handleScroll () {
     feedbacksState.isLoadingMoreFeedbacks = true
 
     // const data = { results: [], pagination: { limit: 5, offset: 0, total: 0 } } // NOTE mock
-    const { data } = await services.feedbacks.getAll({
+    const payload: PayloadGetAll = {
       ...feedbacksState.pagination,
       type: feedbacksState.currentFeedbackType,
       offset: feedbacksState.pagination.offset + 5,
-    })
+    }
+    const { data } = await services.feedbacks.getAll(payload)
 
-    if (data.results.length) {
+    if (data.results?.length) {
       feedbacksState.feedbacks.push(...data.results)
     }
 

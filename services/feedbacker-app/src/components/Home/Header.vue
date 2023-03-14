@@ -2,11 +2,13 @@
 
 function triggerAccountCreation () {
   // on vue2: () => emit('create-account')
+  console.log(' 🔴 create-account',)
   throw '#TODO IMPLEMENT'
 }
 
 function triggerAccountLogin () {
   // on vue2: () => emit('login')
+  console.log(' 🔴 login',)
   throw '#TODO IMPLEMENT'
 }
 

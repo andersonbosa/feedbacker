@@ -4,24 +4,38 @@ import Contact from '~/components/Home/Contact.vue'
 import Footer from '~/components/Home/Footer.vue'
 import Header from '~/components/Home/Header.vue'
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
-
-
-const router = useRouter()
+import services from '~/utils/services/index'
 
 function handleLogin () {
+  // const modal = useModal()
+  // modal.open({
+  //   component: 'ModalLogin'
+  // })
+
   throw '#TODO IMPLEMENT'
 }
 
 function handleAccountCreate () {
+  // const modal = useModal()
+  // modal.open({
+  //   component: 'ModalAccountCreate'
+  // })
   throw '#TODO IMPLEMENT'
 }
 
-onMounted(() => {
+async function verifyUserAuth () {
   /* REVIEW if this is security */
   const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
-  if (token) {
-    router.push({ name: 'Feedbacks' })
+  const { data: me } = await services.users.getMe()
+
+  if (me) {
+    navigateTo('/feedbacks')
+    return
   }
+}
+
+onMounted(() => {
+  verifyUserAuth()
 })
 </script>
 
