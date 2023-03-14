@@ -1,14 +1,15 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-
+import axios, { AxiosResponse } from 'axios'
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 import { useGlobal } from '~/stores/global'
+
 
 export interface HttpClientInterface {
   get<T> (url: string, params?: any): Promise<AxiosResponse<T>>
   post<T> (url: string, body: any): Promise<AxiosResponse<T>>
 }
 
-export class HttpClient implements HttpClientInterface {
+
+class HttpClient implements HttpClientInterface {
   private axios = axios.create({
     /* #TODO dynamic URL based on env*/
     baseURL: 'http://localhost:3000',
@@ -17,7 +18,7 @@ export class HttpClient implements HttpClientInterface {
   });
 
   constructor() {
-    this.axios.interceptors.request.use((config: AxiosRequestConfig) => {
+    this.axios.interceptors.request.use((config: any) => {
       const globalState = useGlobal()
       globalState.setGlobalLoading(true)
 

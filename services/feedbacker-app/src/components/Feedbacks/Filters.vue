@@ -1,91 +1,78 @@
 <script setup lang="ts">
-import {
-  LabelsInterface,
-  IColors,
-  ISummary,
-  IFilter,
-} from '~/lib/types'
-
+import { IFilter } from '~/lib/types'
+import { SUMMARY_MAP_TREE } from '~/lib/contants'
 import { useGlobal } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
-
 import services from '~/utils/services/index'
 
 
 const feedbacksState = useFeedbacks()
 const globalState = useGlobal()
 
-// Assign types to the variables using the defined interfaces
-const LABELS: LabelsInterface = {
-  all: 'Todos',
-  issue: 'Problemas',
-  idea: 'Ideias',
-  other: 'Outros',
-}
 
-const COLORS: IColors = {
-  all: { text: 'text-brand-info', bg: 'bg-brand-info' },
-  issue: { text: 'text-brand-danger', bg: 'bg-brand-danger' },
-  idea: { text: 'text-brand-warning', bg: 'bg-brand-warning' },
-  other: { text: 'text-brand-graydark', bg: 'bg-brand-graydark' },
-}
-const initialFiltersState = { all: 0, issue: 0, idea: 0, other: 0, }
+function applyFiltersStructure (summary: any) {
 
-function applyFiltersStructure (summary: ISummary) {
-  console.log(' 🔴🔴🔴🔴🔴 summary', summary)
-  return Object.keys(summary).reduce((acc: Array<IFilter>, cur) => {
+  function parseFiltersStructures (parsedFilters: Array<IFilter>, summarySlug: any) {
     const currentFilter: IFilter = {
-      label: LABELS[cur],
-      color: COLORS[cur],
-      amount: summary[cur],
+      ...SUMMARY_MAP_TREE[summarySlug],
+      amount: summary[summarySlug],
+      type: summarySlug,
+      active: false
     }
-    // debugger
 
-    if (cur === 'all') {
+    const isDefaultActive = summarySlug === 'all'
+    if (isDefaultActive) {
       currentFilter.active = true
     } else {
-      currentFilter.type = cur
+      currentFilter.type = summarySlug
     }
 
-    return [...acc, currentFilter]
-  }, [])
-}
-
-function handleSelect ({ type }) {
-  console.log(' 🔴🔴🔴🔴🔴 handleSelect', type)
-  if (globalState.isLoading) {
-    console.warn('globalState.isLoading')
-    return
+    return [...parsedFilters, currentFilter]
   }
 
-  globalState.filters = globalState.filters.map((filter) => {
-    if (filter.type === type) {
-      console.warn('filter.type === type')
+  return Object.keys(summary).reduce(parseFiltersStructures, [])
+}
+
+
+function updateFiltersBasedOnTypeSelect (filters: IFilter[], selectedFilterType: String): IFilter[] {
+  return filters.map((filter) => {
+    if (filter.type === selectedFilterType) {
       return { ...filter, active: true }
     }
 
     return { ...filter, active: false }
   })
+}
 
+
+function handleSelect (selectedFilter: IFilter) {
+  console.log(' 🔴🔴🔴🔴🔴 handleSelect', selectedFilter.type)
+  if (globalState.isLoading) {
+    console.warn('globalState.isLoading')
+    return
+  }
+
+  globalState.filters = updateFiltersBasedOnTypeSelect(globalState.filters, selectedFilter.type)
   // emit('select', type) // TODO implement emit
 }
 
-async function setFilters () {
+async function initializeFilters () {
   try {
     const { data } = await services.feedbacks.getSummary()
     globalState.filters = applyFiltersStructure(data)
 
   } catch (error) {
-    console.log(' 🔴🔴🔴🔴🔴 setFilters has error', error)
-    feedbacksState.hasError = !!error
-    globalState.filters = applyFiltersStructure(initialFiltersState)
+    console.error(error)
 
+    feedbacksState.hasError = !!error
+
+    const initialFiltersState = { all: 0, issue: 0, idea: 0, other: 0, }
+    globalState.filters = applyFiltersStructure(initialFiltersState)
   }
-  console.log(' 🔴🔴🔴🔴🔴 setFilters', globalState.filters)
 }
 
 onMounted(() => {
-  setFilters()
+  initializeFilters()
 })
 </script>
 
@@ -98,12 +85,11 @@ onMounted(() => {
         'bg-gray-200 bg-opacity-50': filter.active,
       }" class="flex items-center justify-between px-4 py-1 rounded cursor-pointer">
         <div class="flex items-center">
-          <span />
-          <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full"> </span>
+          <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full"></span>
           {{ filter.label }}
         </div>
         <span>
-          <span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold"> </span>
+          <span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold"></span>
           {{ filter.amount }}
         </span>
       </li>
