@@ -6,7 +6,8 @@ import Header from '~/components/Home/Header.vue'
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 import services from '~/utils/services/index'
 
-function handleLogin () {
+function handleLogin (evt: any) {
+  console.log(' 🔴🔴🔴🔴🔴 handleLogin', evt)
   // const modal = useModal()
   // modal.open({
   //   component: 'ModalLogin'
@@ -23,19 +24,20 @@ function handleAccountCreate () {
   throw '#TODO IMPLEMENT'
 }
 
-async function verifyUserAuth () {
+async function validateUserAuthentication () {
   /* REVIEW if this is security */
   const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
-  const { data: me } = await services.users.getMe()
-
-  if (me) {
-    navigateTo('/feedbacks')
-    return
-  }
+  const { data } = await services.users.getMe()
+  console.log(' 🟡 validateUserAuthentication', token, data)
+  // if (data) {
+  //   // navigateTo('/feedbacks')
+  //   // return
+  //   throw 'to implement'
+  // }
 }
 
 onMounted(() => {
-  verifyUserAuth()
+  validateUserAuthentication()
 })
 </script>
 

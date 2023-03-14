@@ -1,13 +1,13 @@
 <template>
   <teleport to="body">
-    <div v-if="state.isActive"
+    <div v-if="modalState.isActive"
       class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
       @click="handleModalToogle({ status: false })">
-      <div class="fixed mx-10" :class="state.width" @click.stop>
+      <div class="fixed mx-10" :class="modalState.width" @click.stop>
         <div
           class="flex flex-col overflow-hidden bg-white rounded-lg animate__animated animate__fadeInDown animate__faster">
           <div class="flex flex-col px-12 py-10 bg-white">
-            <component :is="state.component" />
+            <component :is="modalState.component" />
           </div>
         </div>
 
@@ -16,7 +16,7 @@
   </teleport>
 </template>
 
-<script>
+<script setup lang="ts">
 // import { onBeforeUnmount, onMounted } from 'vue'
 import ModalAccountCreate from '~/components/ModalCreateAccount/index.vue'
 import ModalLogin from '~/components/ModalLogin/index.vue'
@@ -24,46 +24,36 @@ import ModalLogin from '~/components/ModalLogin/index.vue'
 
 const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3'
 
-export default {
-  components: {
-    ModalLogin,
-    ModalAccountCreate
-  },
-  setup () {
-    const modal = useModal()
-    const state = useState('state', () => ({
-      isActive: false,
-      component: {},
-      props: {},
-      width: DEFAULT_WIDTH
-    }))
+const modal = useModal()
+const modalState: any = useState('modalState', () => ({
+  isActive: false,
+  component: {},
+  props: {},
+  width: DEFAULT_WIDTH
+}))
 
-    onMounted(() => {
-      modal.listen(handleModalToogle)
-    })
+onMounted(() => {
+  modal.listen(handleModalToogle)
+})
 
-    onBeforeUnmount(() => {
-      modal.off(handleModalToogle)
-    })
+onBeforeUnmount(() => {
+  modal.off(handleModalToogle)
+})
 
-    function handleModalToogle (payload) {
-      if (payload.status) {
-        state.component = payload.component
-        state.props = payload.props
-        state.width = payload.width ?? DEFAULT_WIDTH
-      } else {
-        state.component = {}
-        state.props = {}
-        state.width = DEFAULT_WIDTH
-      }
+function handleModalToogle (payload: any) {
+  console.log(' 🟡 handleModalToogle ', payload)
 
-      state.isActive = payload.status
-    }
-
-    return {
-      state,
-      handleModalToogle
-    }
+  if (payload.status) {
+    modalState.component = payload.component
+    modalState.props = payload.props
+    modalState.width = payload.width ?? DEFAULT_WIDTH
+  } else {
+    modalState.component = {}
+    modalState.props = {}
+    modalState.width = DEFAULT_WIDTH
   }
+
+  modalState.isActive = payload.status
 }
+
 </script>

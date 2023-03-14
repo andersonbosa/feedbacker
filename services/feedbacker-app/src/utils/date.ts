@@ -43,3 +43,18 @@ export function getDiffTimeBetweenCurrentDate (dateString = '', now = new Date()
 
   return buildMessage('segundo', 1)
 }
+
+
+export function getSPDate () {
+  const options: any = {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  }
+
+  const saoPauloDate = new Date().toLocaleString('pt-BR', options)
+  return saoPauloDate
+}

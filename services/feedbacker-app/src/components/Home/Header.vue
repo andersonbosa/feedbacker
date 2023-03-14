@@ -1,17 +1,13 @@
 <script setup lang="ts">
+const emit = defineEmits(['create-account', 'login'])
 
 function triggerAccountCreation () {
-  // on vue2: () => emit('create-account')
-  console.log(' 🔴 create-account',)
-  throw '#TODO IMPLEMENT'
+  emit('create-account', 'randomArg')
 }
 
 function triggerAccountLogin () {
-  // on vue2: () => emit('login')
-  console.log(' 🔴 login',)
-  throw '#TODO IMPLEMENT'
+  emit('login', 'randomArg')
 }
-
 </script>
 
 
@@ -68,7 +64,7 @@ function triggerAccountLogin () {
 FIXME The code below does not provide Highlight Syntax, and if it removes it does not break anything so it is without being used until a solution is found.
 <style scoped lang="postcss"></style>
 -->
-<style scoped >
+<style scoped lang="postcss">
 .header {
   @apply bg-brand-main w-full flex justify-center;
   height: 700px;
