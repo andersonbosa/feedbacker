@@ -1,11 +1,10 @@
-import { useModalStore } from '~/stores/modalStore'
+import { useUserStore } from '~/stores/userStore'
 
-const EVENT_NAME = 'modal:toggle'
 
-export default function useModal () {
-  const modalStore = useModalStore()
+export default function useUser () {
+  const modalStore = useUserStore()
 
-  console.log(' 🟢 useModal', modalStore)
+  console.log(' 🟢 useUser', modalStore)
   return {
     store: modalStore,
 

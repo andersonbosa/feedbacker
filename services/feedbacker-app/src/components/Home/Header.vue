@@ -1,4 +1,11 @@
 <script setup lang="ts">
+const props = defineProps({
+  msg: String,
+  count: {
+    type: Number,
+    default: 0
+  }
+})
 const emit = defineEmits(['create-account', 'login'])
 
 function triggerAccountCreation () {

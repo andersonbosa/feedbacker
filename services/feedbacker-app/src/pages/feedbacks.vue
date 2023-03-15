@@ -117,8 +117,6 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll, false)
 })
 
-
-console.log(' 🔵 src/pages/feedbacks.vue')
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 <template>
   <teleport to="body">
-    <div v-if="modalState.isActive"
+    <div v-if="modal.isActive"
       class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50"
       @click="handleModalToogle({ status: false })">
-      <div class="fixed mx-10" :class="modalState.width" @click.stop>
+      <div class="fixed mx-10" :class="modal.width" @click.stop>
         <div
           class="flex flex-col overflow-hidden bg-white rounded-lg animate__animated animate__fadeInDown animate__faster">
           <div class="flex flex-col px-12 py-10 bg-white">
-            <component :is="modalState.component" />
+            <component :is="modal.component" />
           </div>
         </div>
 
@@ -20,17 +20,8 @@
 // import { onBeforeUnmount, onMounted } from 'vue'
 import ModalAccountCreate from '~/components/ModalCreateAccount/index.vue'
 import ModalLogin from '~/components/ModalLogin/index.vue'
-// import useModal from '../../hooks/useModal'
-
-const DEFAULT_WIDTH = 'w-3/4 lg:w-1/3'
 
 const modal = useModal()
-const modalState: any = useState('modalState', () => ({
-  isActive: false,
-  component: {},
-  props: {},
-  width: DEFAULT_WIDTH
-}))
 
 onMounted(() => {
   modal.listen(handleModalToogle)
@@ -40,20 +31,24 @@ onBeforeUnmount(() => {
   modal.off(handleModalToogle)
 })
 
-function handleModalToogle (payload: any) {
-  console.log(' 🟡 handleModalToogle ', payload)
+function handleModalToogle (mutationObject: any, state: any) {
+  console.log(' 🟡 handleModalToogle:',)
 
-  if (payload.status) {
-    modalState.component = payload.component
-    modalState.props = payload.props
-    modalState.width = payload.width ?? DEFAULT_WIDTH
+  const analyzedValue = mutationObject.events.newValue // através do $subscribe do pinia
+  // const analyzedValue = state.payload // através do useModalStore
+
+  if (analyzedValue.status) {
+    modal.component = analyzedValue.component
+    modal.props = analyzedValue.props
+    modal.width = analyzedValue.width || modal.store.getDefaultModalWidth
   } else {
-    modalState.component = {}
-    modalState.props = {}
-    modalState.width = DEFAULT_WIDTH
+    /* reseta o bagui ??? */
+    modal.component = {}
+    modal.props = {}
+    modal.width = modal.store.getDefaultModalWidth
   }
 
-  modalState.isActive = payload.status
+  modal.isActive = analyzedValue.status
 }
 
 </script>

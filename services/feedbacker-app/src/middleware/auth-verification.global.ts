@@ -1,4 +1,4 @@
-import { useUserContext } from '~/stores/userContext'
+import { useUserStore } from '~~/src/stores/userStore'
 import services from '~/utils/services'
 
 /* Middleware demonstration */
@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(
     //   return navigateTo('/login')
     // }
 
-    // const userContext = useUserContext()
+    // const userContext = useUserStore()
     // userContext.setToken(isUserAuthenticated)
   }
 )

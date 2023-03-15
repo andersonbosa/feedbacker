@@ -6,7 +6,7 @@ const userInitialState: UserInitialState = {
   currentUser: {}
 }
 
-export const useUserContext: any = defineStore('userContext', {
+export const useUserStore: any = defineStore('userStore', {
   state: () => reactive({
     currentUser: userInitialState.currentUser
   }),
@@ -37,5 +37,5 @@ export const useUserContext: any = defineStore('userContext', {
 
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useUserContext, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
 }

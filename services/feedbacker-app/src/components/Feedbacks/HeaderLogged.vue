@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { useUserContext } from '~/stores/userContext'
+import { useUserStore } from '~/stores/userStore'
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 
-const userStore = useUserContext()
+const userStore = useUserStore()
 
 const logoutLabel = useState<string>('logoutLabel', () => {
   if (!userStore.currentUser.name) {

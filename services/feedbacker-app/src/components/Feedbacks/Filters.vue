@@ -12,6 +12,15 @@ atualizar lista dos feedbacks baseado no filtro selecionado
 const feedbacksState = useFeedbacks()
 const globalState = useGlobal()
 
+const props = defineProps({
+  msg: String,
+  count: {
+    type: Number,
+    default: 0
+  }
+})
+const emit = defineEmits(['select'])
+
 
 function applyFiltersStructure (summary: any) {
 
@@ -56,7 +65,7 @@ function handleSelect (selectedFilter: IFilter) {
   }
 
   globalState.filters = updateFiltersBasedOnTypeSelect(globalState.filters, selectedFilter.type)
-  // emit('select', type) // TODO implement emit
+  emit('select', selectedFilter.type) // TODO implement emit
 }
 
 async function initializeFilters () {
