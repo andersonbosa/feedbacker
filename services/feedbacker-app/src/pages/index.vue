@@ -1,54 +1,52 @@
 <script setup lang="ts">
-// import { onMounted } from 'vue'
-import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 import Contact from '~/components/Home/Contact.vue'
 import Footer from '~/components/Home/Footer.vue'
 import Header from '~/components/Home/Header.vue'
-// import ModalAccountCreate from '~/components/ModalCreateAccount/index.vue'
-// import ModalLogin from '~/components/ModalLogin/index.vue'
-
 import services from '~/utils/services/index'
-import { useUserStore } from '~/stores/userStore'
+// import { useModalStore } from '~/stores/modalStore'
 
+// const modal = useModal()
+// const modal = useModalStore()
 const modal = useModal()
-const userStore = useUserStore()
+const user = useUser()
 
-function handleLogin (evt: any) {
-  console.log(' 🔴 handleLogin', evt)
-  modal.open({
-    component: 'ModalLogin'
-  })
+
+/* TODO função deve usar modal.open passando configuração desejada */
+// TODO factory method to create required modal state configuration
+function handleAccountLogin () {
+  console.log(' 🟡 === handleAccountLogin',)
+  modal.open(
+    modal.configs.createLoginModal()
+  )
 }
 
-function handleAccountCreate (evt: any) {
-  console.log(' 🔴 handleAccountCreate', evt)
-  modal.open({
-    component: 'ModalAccountCreate'
-  })
+/* TODO função deve usar modal.open passando configuração desejada */
+// TODO factory method to create required modal state configuration
+function handleAccountCreate () {
+  console.log(' 🟣 === handleAccountCreate',)
+  modal.open(
+    modal.configs.createSignUpModal()
+  )
 }
 
-async function validateUserAuthentication () {
-  /* REVIEW if this is security */
+async function tryAuthUserByLocalStorageToken () {
   const { data: userData } = await services.users.getMe()
 
-  console.log(' 🟡 validateUserAuthentication', userData, userStore)
   if (userData.id) {
-    userStore.setCurrentUser(userData)
-    navigateTo('/feedbacks')
-    //   return
-    //   // throw 'to implement'
+    user.store.setCurrentUser(userData)
+    return navigateTo('/feedbacks')
   }
 }
 
 onMounted(() => {
-  validateUserAuthentication()
+  tryAuthUserByLocalStorageToken()
 })
 </script>
 
 
 <template>
   <div>
-    <Header @create-account="handleAccountCreate" @login="handleLogin" />
+    <Header @create-account="handleAccountCreate" @login="handleAccountLogin" />
     <Contact />
     <Footer />
   </div>

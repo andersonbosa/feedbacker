@@ -1,5 +1,4 @@
-import { IFilter } from '~/lib/types'
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useGlobal = defineStore('global', {
   state: () => ({

@@ -2,14 +2,22 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { reactive } from 'vue'
 import { UserInitialState } from '~/lib/types'
 
-const userInitialState: UserInitialState = {
+// const userInitialState: UserInitialState = {
+//   currentUser: {}
+// }
+
+const userInitialState: any = {
   currentUser: {}
 }
 
 export const useUserStore: any = defineStore('userStore', {
-  state: () => reactive({
-    currentUser: userInitialState.currentUser
-  }),
+
+  /* TOFIX nao sei se da boa com reactive */
+  // state: () => reactive({
+  //   currentUser: userInitialState.currentUser
+  // }),
+
+  state: () => userInitialState,
 
   getters: {
   },
@@ -17,14 +25,17 @@ export const useUserStore: any = defineStore('userStore', {
   actions: {
     resetUserStore () {
       // this.$reset()
-      this.state = reactive(userInitialState)
+      this.state = userInitialState
     },
 
     cleanCurrentUser () {
-      this.currentUser = {}
+      this.currentUser = userInitialState.currentUser
     },
 
-    setCurrentUser (user: object/* TODO currentUser interface */) {
+    setCurrentUser (user: object) {
+      /* TODO currentUser interface */
+      console.log('********************** setCurrentUser', user)
+
       this.currentUser = user
     },
 

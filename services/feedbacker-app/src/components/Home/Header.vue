@@ -1,19 +1,20 @@
 <script setup lang="ts">
 const props = defineProps({
-  msg: String,
-  count: {
-    type: Number,
-    default: 0
-  }
+  headerProps: Object,
 })
+
 const emit = defineEmits(['create-account', 'login'])
 
-function triggerAccountCreation () {
-  emit('create-account', 'randomArg')
+function triggerAccountCreate () {
+  console.log(' 🟣 triggerAccountCreate',)
+  // TODO factory method to create required modal state configuration
+  emit('create-account', props)
 }
 
 function triggerAccountLogin () {
-  emit('login', 'randomArg')
+  console.log(' 🟡 triggerAccountLogin',)
+  // TODO factory method to create required modal state configuration
+  emit('login', props)
 }
 </script>
 
@@ -31,7 +32,7 @@ function triggerAccountLogin () {
 
         <div class="flex">
           <button id="header-create-account-button" class="px-6 py-2 font-bold rounded-full text-white focus:outline-none"
-            @click="triggerAccountCreation">
+            @click="triggerAccountCreate">
             Crie uma conta
           </button>
           <button id="header-login-button"
@@ -54,7 +55,7 @@ function triggerAccountLogin () {
           simples widget na página.
         </p>
         <div>
-          <button @click="triggerAccountCreation" id="cta-create-account-button"
+          <button @click="triggerAccountCreate" id="cta-create-account-button"
             class="px-6 py-2 mt-10 font-bold bg-white rounded-full text-brand-main focus:outline-none">
             Crie uma conta grátis
           </button>

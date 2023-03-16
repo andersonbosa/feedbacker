@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, onErrorCaptured } from 'vue'
+import { onErrorCaptured/* , onMounted, onUnmounted */ } from 'vue'
 
 import { PayloadGetAll } from '~/lib/types'
 
-import { useGlobal } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
+import { useGlobal } from '~/stores/global'
 
-import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
-import Filters from '~/components/Feedbacks/Filters.vue'
-import FiltersLoading from '~/components/Feedbacks/FiltersLoading.vue'
 import FeedbackCardLoading from '~/components/Feedbacks/FeedbackCard/Loading.vue'
 import FeedbackCard from '~/components/Feedbacks/FeedbackCard/index.vue'
+import Filters from '~/components/Feedbacks/Filters.vue'
+import FiltersLoading from '~/components/Feedbacks/FiltersLoading.vue'
+import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
 
 import services from '~/utils/services/index'
 

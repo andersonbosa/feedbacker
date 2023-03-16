@@ -11,15 +11,18 @@ interface IModal {
 
 const DEFAULT_MODAL_WIDTH = 'w-3/4 lg:w-1/3'
 
-const initialModalState = {
+const closedState = {
   status: false,
-  payload: {},
-
   isActive: false,
+}
+
+const initialModalState = {
+  ...closedState,
   component: {},
   props: {},
   width: DEFAULT_MODAL_WIDTH
 }
+
 
 export const useModalStore: any = defineStore('modalStore', {
   state: () => (initialModalState as IModal),
@@ -31,14 +34,21 @@ export const useModalStore: any = defineStore('modalStore', {
   },
 
   actions: {
-    open (payload = {}) {
+
+    open (config = {}) {
+      console.log(' 😀 store:open', config)
       this.status = true
-      this.payload = payload
+      this.isActive = true
+
+      Object.assign(this, config)
     },
 
-    close (payload = {}) {
+    close (config = {}) {
+      console.log(' 😀 store:close', this)
       this.status = false
-      this.payload = payload
+      this.isActive = false
+
+      Object.assign(this, config)
     }
   }
 })
