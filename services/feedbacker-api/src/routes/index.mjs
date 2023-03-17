@@ -22,7 +22,7 @@ const router = new Router()
 
 router.get('/healthcheck', async (ctx) => {
   ctx.status = 200
-  ctx.body = { alive: true, message: new Date }
+  ctx.body = { alive: true, message: new Date() }
 })
 
 /* Public resources */

@@ -55,102 +55,91 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useField } from 'vee-validate'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useField } from 'vee-validate'
 import { useToast } from 'vue-toastification'
-// import useModal from '../../hooks/useModal'
-import Icon from '../Icon'
-import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators'
-import services from '../../utils/services'
+import Icon from '~/components/Icon'
+import services from '~/utils/services'
+import { validateEmptyAndEmail, validateEmptyAndLength3 } from '~/utils/validators'
 
-export default {
-  components: { Icon },
-  setup () {
-    const router = useRouter()
-    const modal = useModal()
-    const toast = useToast()
+const router = useRouter()
+const modal = useModal()
+const toast = useToast()
 
-    const {
-      value: nameValue,
-      errorMessage: nameErrorMessage
-    } = useField('name', validateEmptyAndLength3)
+const {
+  value: nameValue,
+  errorMessage: nameErrorMessage
+} = useField('name', validateEmptyAndLength3)
 
-    const {
-      value: emailValue,
-      errorMessage: emailErrorMessage
-    } = useField('email', validateEmptyAndEmail)
+const {
+  value: emailValue,
+  errorMessage: emailErrorMessage
+} = useField('email', validateEmptyAndEmail)
 
-    const {
-      value: passwordValue,
-      errorMessage: passwordErrorMessage
-    } = useField('password', validateEmptyAndLength3)
+const {
+  value: passwordValue,
+  errorMessage: passwordErrorMessage
+} = useField('password', validateEmptyAndLength3)
 
-    const state = reactive({
-      hasErrors: false,
-      isLoading: false,
-      name: {
-        value: nameValue,
-        errorMessage: nameErrorMessage
-      },
-      email: {
-        value: emailValue,
-        errorMessage: emailErrorMessage
-      },
-      password: {
-        value: passwordValue,
-        errorMessage: passwordErrorMessage
-      }
+const state = reactive({
+  hasErrors: false,
+  isLoading: false,
+  name: {
+    value: nameValue,
+    errorMessage: nameErrorMessage
+  },
+  email: {
+    value: emailValue,
+    errorMessage: emailErrorMessage
+  },
+  password: {
+    value: passwordValue,
+    errorMessage: passwordErrorMessage
+  }
+})
+
+async function login ({ email, password }) {
+  const { data, errors } = await services.auth.login({ email, password })
+  if (!errors) {
+    window.localStorage.setItem('token', data.token)
+    router.push({ name: 'Feedbacks' })
+    modal.close()
+  }
+
+  state.isLoading = false
+}
+
+async function handleSubmit () {
+  try {
+    toast.clear()
+    state.isLoading = true
+
+    const { errors } = await services.auth.register({
+      name: state.name.value,
+      email: state.email.value,
+      password: state.password.value
     })
 
-    async function login ({ email, password }) {
-      const { data, errors } = await services.auth.login({ email, password })
-      if (!errors) {
-        window.localStorage.setItem('token', data.token)
-        router.push({ name: 'Feedbacks' })
-        modal.close()
-      }
-
-      state.isLoading = false
+    if (!errors) {
+      await login({
+        email: state.email.value,
+        password: state.password.value
+      })
+      return
     }
 
-    async function handleSubmit () {
-      try {
-        toast.clear()
-        state.isLoading = true
-
-        const { errors } = await services.auth.register({
-          name: state.name.value,
-          email: state.email.value,
-          password: state.password.value
-        })
-
-        if (!errors) {
-          await login({
-            email: state.email.value,
-            password: state.password.value
-          })
-          return
-        }
-
-        if (errors.status === 400) {
-          toast.error('Ocorreu um erro ao criar a conta')
-        }
-
-        state.isLoading = false
-      } catch (error) {
-        state.isLoading = false
-        state.hasErrors = !!error
-        toast.error('Ocorreu um erro ao criar a conta')
-      }
+    if (errors.status === 400) {
+      toast.error('Ocorreu um erro ao criar a conta')
     }
 
-    return {
-      state,
-      close: modal.close,
-      handleSubmit
-    }
+    state.isLoading = false
+  } catch (error) {
+    state.isLoading = false
+    state.hasErrors = !!error
+    toast.error('Ocorreu um erro ao criar a conta')
   }
 }
+
 </script>
