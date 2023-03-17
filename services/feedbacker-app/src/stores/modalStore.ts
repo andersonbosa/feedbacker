@@ -34,20 +34,15 @@ export const useModalStore: any = defineStore('modalStore', {
   },
 
   actions: {
-
     open (config = {}) {
-      console.log(' 😀 store:open', config)
       this.status = true
       this.isActive = true
-
       Object.assign(this, config)
     },
 
     close (config = {}) {
-      console.log(' 😀 store:close', this)
       this.status = false
       this.isActive = false
-
       Object.assign(this, config)
     }
   }
