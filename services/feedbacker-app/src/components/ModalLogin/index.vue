@@ -11,6 +11,8 @@ import {
 /* NOTE useModalStore or useModal should standardize these states
 e just receive events? */
 
+/* FIXME HOW TO USE `toast`? it isn't working! */
+
 import { useField } from 'vee-validate'
 
 const globalStore = useGlobalStore()
@@ -42,7 +44,12 @@ function setupLoginModalState () {
 
   Object.assign(globalStore, componentInitialState)
 }
-
+function setAuthToken (token: string) {
+  window.localStorage.setItem('token', token)
+  useModal().close()
+  useRouter().push('/feedbacks')
+  globalStore.isLoading = false
+}
 async function handleSubmit () {
   /* TODO submit login */
   console.log('f:handleSubmit')
@@ -56,10 +63,7 @@ async function handleSubmit () {
     })
 
     if (!errors) {
-      window.localStorage.setItem('token', data.token)
-      useModal().close()
-      useRouter().push('/feedbacks')
-      globalStore.isLoading = false
+      setAuthToken(data.token)
       return
     }
 
