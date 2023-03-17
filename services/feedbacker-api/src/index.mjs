@@ -2,6 +2,7 @@ import './config/loadEnv.mjs'
 
 import cors from '@koa/cors'
 import Koa from 'koa'
+import logger from 'koa-logger'
 import { koaBody } from 'koa-body'
 import router from './routes/index.mjs'
 
@@ -12,6 +13,7 @@ const { PORT = 3001 } = process.env
 const koaApp = new Koa()
 
 /* setup default middlewares */
+koaApp.use(logger())
 koaApp.use(cors())
 koaApp.use(koaBody({
   jsonLimit: '5MB'
