@@ -45,7 +45,7 @@ onMounted(() => {
 
 
 <template>
-  <div>
+  <div id="index_page">
     <Header @create-account="handleAccountCreate" @login="handleAccountLogin" />
     <Contact />
     <Footer />

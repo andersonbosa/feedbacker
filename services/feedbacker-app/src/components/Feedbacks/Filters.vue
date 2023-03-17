@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IFilter } from '~/lib/types'
 import { SUMMARY_MAP_TREE } from '~/lib/contants'
-import { useGlobal } from '~/stores/global'
+import { useGlobalStore } from '~/stores/global'
 import { useFeedbacks } from '~/stores/feedbacks'
 import services from '~/utils/services/index'
 
@@ -10,7 +10,7 @@ atualizar lista dos feedbacks baseado no filtro selecionado
 */
 
 const feedbacksState = useFeedbacks()
-const globalState = useGlobal()
+const globalState = useGlobalStore()
 
 const props = defineProps({
   msg: String,

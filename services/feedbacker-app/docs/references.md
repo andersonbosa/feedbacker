@@ -36,3 +36,10 @@ const emit = defineEmits(['change', 'delete'])
 // setup code
 </script>
 ```
+
+
+---
+
+## technologies
+
+- 

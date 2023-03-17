@@ -3,9 +3,9 @@ import ModalLogin from '~/components/ModalLogin/index.vue'
 import ModalCreateAccount from '~/components/ModalCreateAccount/index.vue'
 
 /*
-
 NOTES considerações useModel e useModaLStore
 
+REVIEW refactor
 
 */
 
@@ -46,17 +46,10 @@ export default function useModal () {
       modalStore.$subscribe(fnHandler)
     },
 
-    off (fnHandler: Function) {
-      modalStore.$unsubscribe(fnHandler)
-    },
-
-    showModal () {
-      modalStore.isActive = true
-    },
-
-    hideModal () {
-      modalStore.isActive = false
-    },
+    /* TOFIX */
+    // off (fnHandler: Function) {
+    //   modalStore.$unsubscribe(fnHandler)
+    // },
 
     isHidden () {
       return modalStore.isActive === false

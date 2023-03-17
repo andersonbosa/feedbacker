@@ -4,7 +4,7 @@ import { onErrorCaptured/* , onMounted, onUnmounted */ } from 'vue'
 import { PayloadGetAll } from '~/lib/types'
 
 import { useFeedbacks } from '~/stores/feedbacks'
-import { useGlobal } from '~/stores/global'
+import { useGlobalStore } from '~/stores/global'
 
 import FeedbackCardLoading from '~/components/Feedbacks/FeedbackCard/Loading.vue'
 import FeedbackCard from '~/components/Feedbacks/FeedbackCard/index.vue'
@@ -14,7 +14,7 @@ import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
 
 import services from '~/utils/services/index'
 
-const globalState = useGlobal()
+const globalState = useGlobalStore()
 const feedbacksState = useFeedbacks()
 
 function handleErrors (error: any) {

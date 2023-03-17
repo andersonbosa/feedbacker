@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
-import { useGlobal } from '~/stores/global'
+import { useGlobalStore } from '~/stores/global'
 
 
 export interface HttpClientInterface {
@@ -16,7 +16,7 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.request.use((config: any) => {
-  const globalState = useGlobal()
+  const globalState = useGlobalStore()
   globalState.setGlobalLoading(true)
 
   const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)
@@ -29,7 +29,7 @@ httpClient.interceptors.request.use((config: any) => {
 
 httpClient.interceptors.response.use(
   (response: any) => {
-    const globalState = useGlobal()
+    const globalState = useGlobalStore()
     globalState.setGlobalLoading(false)
     return response
   },
@@ -37,7 +37,7 @@ httpClient.interceptors.response.use(
     const canThrowAnError = error.request.status === 0 || error.request.status === 500
 
     if (canThrowAnError) {
-      const globalState = useGlobal()
+      const globalState = useGlobalStore()
       globalState.setGlobalLoading(false)
 
     }
@@ -48,7 +48,7 @@ httpClient.interceptors.response.use(
       throw new Error(error.message)
     }
 
-    const globalState = useGlobal()
+    const globalState = useGlobalStore()
     globalState.setGlobalLoading(false)
     return error
   }

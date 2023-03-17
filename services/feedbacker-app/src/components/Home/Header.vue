@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
-  headerProps: Object,
+  helloworld: Object,
 })
 
 const emit = defineEmits(['create-account', 'login'])
