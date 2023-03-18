@@ -43,7 +43,7 @@ export default defineNuxtConfig({
 
 
   // https://nuxt.com/docs/guide/directory-structure/components#custom-directories
-  components: [ '~/components', ],
+  components: ['~/components',],
 
 
   // https://nuxt.com/docs/guide/directory-structure/pages#router-options
@@ -59,7 +59,6 @@ export default defineNuxtConfig({
     // '@nuxt/devtools',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-
   ],
 
 
@@ -110,7 +109,7 @@ export default defineNuxtConfig({
 
 
   // https://nuxt.com/docs/guide/going-further/runtime-config#exposing-runtime-config
-  runtimeConfig: { },
+  runtimeConfig: {},
 
 
   // sourcemap: {
