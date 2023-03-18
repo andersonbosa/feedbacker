@@ -8,13 +8,14 @@ const goToCredentials = () => navigateTo('/credentials', { redirectCode: 301 })
 
 const user = useUser()
 
-const logoutBtn = 'logoutLabel'
+/* TODO botão de logout com nome do usuário*/
+const logoutBtn = 'Sair'
 
-console.log(' ************ /HeaderLogged.vue')
-console.log(user.store.currentUser)
+console.log(' ******** /HeaderLogged.vue')
+console.log(user.loggedUser.name)
 
 // watch(
-//   () => userStore.currentUser,
+//   () => userStore.loggedUser,
 //   (name) => {
 
 //     if (!name) {
@@ -30,9 +31,7 @@ console.log(user.store.currentUser)
 // )
 
 function handleLogout () {
-  window.localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-
-  user.store.cleanCurrentUser()
+  useUser().logout()
   goToHome()
 }
 </script>

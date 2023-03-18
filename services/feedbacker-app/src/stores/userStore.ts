@@ -1,22 +1,17 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { reactive } from 'vue'
-import { UserInitialState } from '~/lib/types'
+import { decodeJWT } from '~/utils/common'
 
 // const userInitialState: UserInitialState = {
-//   currentUser: {}
+//   loggedUser: {}
 // }
 
 const userInitialState: any = {
-  currentUser: {}
+  loggedUser: {},
+  token: undefined,
+  apiKey: undefined,
 }
 
 export const useUserStore: any = defineStore('userStore', {
-
-  /* TOFIX nao sei se da boa com reactive */
-  // state: () => reactive({
-  //   currentUser: userInitialState.currentUser
-  // }),
-
   state: () => userInitialState,
 
   getters: {
@@ -24,24 +19,30 @@ export const useUserStore: any = defineStore('userStore', {
 
   actions: {
     resetUserStore () {
-      // this.$reset()
-      this.state = userInitialState
+      this.$reset()
+      // this.state = userInitialState
     },
 
     cleanCurrentUser () {
-      this.currentUser = userInitialState.currentUser
+      this.loggedUser = userInitialState.loggedUser
     },
 
-    setCurrentUser (user: object) {
-      /* TODO currentUser interface */
-      console.log('********************** setCurrentUser', user)
+    setJWT (token: string) {
+      /* TODO loggedUser interface */
+      const { payload } = decodeJWT(token)
+      this.setUser(payload)
+      this.token = token
+    },
 
-      this.currentUser = user
+    setUser (user: object | string) {
+      /* TODO loggedUser interface */
+
+      this.loggedUser = user
     },
 
     setApiKey (apiKey: string) {
-      const currentUser = { ...this.currentUser, apiKey }
-      this.currentUser = currentUser
+      const loggedUser = { ...this.loggedUser, apiKey }
+      this.loggedUser = loggedUser
     }
   }
 })

@@ -8,7 +8,7 @@ import "vue-toastification/dist/index.css"
 
 
 const toastOptions: PluginOptions = {
-  timeout: 5000,
+  timeout: 3000,
   closeOnClick: true,
   pauseOnFocusLoss: true,
   pauseOnHover: true,

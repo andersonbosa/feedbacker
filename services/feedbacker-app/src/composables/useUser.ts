@@ -1,11 +1,26 @@
 import { useUserStore } from '~/stores/userStore'
+import { authorizeUser, cleanClientAuthToken, welcomeUser } from '~/utils/common'
 
-const useStore = useUserStore()
 
 export default function useUser () {
-  // console.log(' 🟢 useUser', useStore)
-
+  console.log(' 🟢 useUser')
   return {
-    store: useStore,
+    ...useUserStore(),
+
+    register () {
+
+    },
+
+    async login (token: string) {
+      authorizeUser(token)
+      welcomeUser(token)
+    },
+
+    async logout () {
+      console.log(' logout')
+      cleanClientAuthToken()
+
+      this.$reset()
+    }
   }
 }

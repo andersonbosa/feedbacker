@@ -27,7 +27,7 @@
       <content-loader v-if="store.Global.isLoading || state.isLoading" class="rounded" width="600px" height="50px" />
       <div v-else class="flex py-3 pl-5 mt-2 rounded justify-between items-center bg-brand-gray w-full lg:w-1/2">
         <span v-if="state.hasError">Erro ao carregar a apikey</span>
-        <span v-else id="apikey">{{ store.User.currentUser.apiKey }}</span>
+        <span v-else id="apikey">{{ store.User.loggedUser.apiKey }}</span>
         <div class="flex ml-20 mr-5" v-if="!state.hasError">
           <icon @click="handleCopy" name="copy" :color="brandColors.graydark" size="24" class="cursor-pointer" />
           <icon id="generate-apikey" @click="handleGenerateApikey" name="loading" :color="brandColors.graydark" size="24"
@@ -46,7 +46,7 @@
     &lt;script
       defer
       async
-      onload="init('{{ store.User.currentUser.apiKey }}')"
+      onload="init('{{ store.User.loggedUser.apiKey }}')"
       src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js"
     &gt;&lt;/script&gt;
             </pre>

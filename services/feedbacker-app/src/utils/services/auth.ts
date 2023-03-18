@@ -21,6 +21,7 @@ export default httpClient => ({
     }
   },
   login: async ({ email, password }) => {
+    console.log(' 🟡 POST', email)
     const response = await httpClient.post('/auth/login', {
       email,
       password

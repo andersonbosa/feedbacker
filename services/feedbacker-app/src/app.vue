@@ -2,7 +2,6 @@
 import { getSPDate } from '~/utils/date'
 import ModalFactory from '~/components/ModalFactory/index.vue'
 
-useNotification().toast.success('deu boa!')
 
 // const { BASE_URL, PORT, API_PORT, API_KEY, } = process.env
 // console.log('*****app.vue env', BASE_URL, PORT, API_PORT, API_KEY,)

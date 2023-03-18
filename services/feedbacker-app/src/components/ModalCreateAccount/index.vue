@@ -4,7 +4,7 @@
       Crie uma conta
     </h1>
 
-    <button @click="close" class="text-4xl text-gray-600 focus:outline-none">
+    <button @click="handleModalClose" class="text-4xl text-gray-600 focus:outline-none">
       &times;
     </button>
   </div>
@@ -63,6 +63,7 @@ import { useToast } from 'vue-toastification'
 import Icon from '~/components/Icon'
 import services from '~/utils/services'
 import { validateEmptyAndEmail, validateEmptyAndLength3 } from '~/utils/validators'
+import { setClientAuthToken } from '~~/src/utils/common'
 
 const router = useRouter()
 const modal = useModal()
@@ -100,16 +101,22 @@ const state = reactive({
   }
 })
 
-async function login ({ email, password }) {
+async function tryLogin ({ email, password }) {
   const { data, errors } = await services.auth.login({ email, password })
   if (!errors) {
-    window.localStorage.setItem('token', data.token)
-    router.push({ name: 'Feedbacks' })
-    modal.close()
+    setClientAuthToken(data.userToken)
+    navigateTo('/feedbacks')
+    useModal().close()
   }
 
   state.isLoading = false
 }
+
+
+async function handleModalClose () {
+  useModal().close()
+}
+
 
 async function handleSubmit () {
   try {
@@ -123,7 +130,7 @@ async function handleSubmit () {
     })
 
     if (!errors) {
-      await login({
+      await tryLogin({
         email: state.email.value,
         password: state.password.value
       })

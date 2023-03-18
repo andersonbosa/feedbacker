@@ -1,7 +1,7 @@
 // Define the interfaces
 
 export interface UserInitialState {
-  currentUser: {
+  loggedUser: {
     name?: string
   }
 }

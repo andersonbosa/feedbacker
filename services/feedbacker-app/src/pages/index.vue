@@ -29,11 +29,15 @@ function handleAccountCreate () {
   )
 }
 
+function getClientAuthToken (token: string) {
+  window.localStorage.setItem('token', token)
+}
+
 async function tryAuthUserByLocalStorageToken () {
   const { data: userData } = await services.users.getMe()
 
   if (userData.id) {
-    user.store.setCurrentUser(userData)
+    user.store.setUser(userData)
     return navigateTo('/feedbacks')
   }
 }
