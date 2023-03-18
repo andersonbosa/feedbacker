@@ -5,7 +5,7 @@ import { reactive } from 'vue'
 
 import palette from '~/config/palette'
 
-import Icon from '~/components/Feedbacks/Icon/index.vue'
+import Icon from '~/components/Icon/index.vue'
 import Badge from '~/components/Feedbacks/FeedbackCard/Badge.vue'
 
 import { getDiffTimeBetweenCurrentDate } from '~/utils/date'

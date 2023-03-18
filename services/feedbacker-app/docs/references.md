@@ -37,9 +37,15 @@ const emit = defineEmits(['change', 'delete'])
 </script>
 ```
 
+---
+
+- https://github.com/mirumirumi/template-nuxt3/blob/main/nuxt.config.ts
+- https://nuxt.com/modules/vueuse
+- https://github.com/antfu/vitesse-nuxt3/blob/main/config/pwa.ts
+
 
 ---
 
 ## technologies
 
-- 
+- TBD
