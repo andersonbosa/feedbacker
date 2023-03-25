@@ -142,7 +142,6 @@ async function handleSubmit () {
     global.isLoading = false
     componentState.hasErrors = !!error
     toast.error('Ocorreu algum erro ao criar sua conta. A equipe técnica já foi notificada!')
-    debugger
     throw Error(error)
   }
 }
