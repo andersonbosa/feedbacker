@@ -13,8 +13,7 @@ REVIEW refactor
 
 export default function useModal () {
   const modalStore = useModalStore()
-
-  // console.log(' 🟢 useModal', modalStore)
+  
   return {
     store: modalStore,
 

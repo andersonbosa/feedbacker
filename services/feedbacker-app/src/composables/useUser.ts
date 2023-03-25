@@ -1,26 +1,42 @@
+import { User } from '~/lib/types'
 import { useUserStore } from '~/stores/userStore'
-import { authorizeUser, cleanClientAuthToken, welcomeUser } from '~/utils/common'
+import { setClientAuthToken } from '~/utils/common'
+import services from '~/utils/services'
 
 
+const { toast } = useNotification()
+
+/**
+ * facilitação na importação da store
+ * é useUser é um invólucro que recebe "autoimport" do nuxt3
+ * em um projeto vue puro seria o mesmo que colocar as funções nas actions, e demais atributos
+ * direto na store useUserStore
+ */
 export default function useUser () {
-  console.log(' 🟢 useUser')
+  const userStore = useUserStore()
+
+  console.log('👩‍🦰 useUser')
   return {
-    ...useUserStore(),
+    store: userStore,
 
-    register () {
+    async setUserIdentityByToken (jwt: string) {
+      setClientAuthToken(jwt)
 
+      const { data } = await services.users.getMe()
+      if (data?.id && data?.name) {
+        useUser().loginByToken(data)
+        return
+      }
     },
 
-    async login (token: string) {
-      authorizeUser(token)
-      welcomeUser(token)
+    loginByToken (user: User) {
+      this.store.setUser(user)
     },
 
-    async logout () {
-      console.log(' logout')
-      cleanClientAuthToken()
-
-      this.$reset()
-    }
+    welcomeUser () {
+      toast.success(`Bem vind@, ${this.store.getUserFirstName}!`)
+      useModal().close()
+      useRouter().push('/feedbacks')
+    },
   }
 }

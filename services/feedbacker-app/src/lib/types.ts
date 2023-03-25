@@ -1,7 +1,7 @@
 // Define the interfaces
 
 export interface UserInitialState {
-  loggedUser: {
+  user: {
     name?: string
   }
 }
@@ -35,4 +35,30 @@ export interface PayloadGetAll {
   type?: string
   limit?: number
   offset?: number
+}
+
+/* ======================================= */
+
+export interface LoginPayload {
+  email: string,
+  password: string
+}
+
+export interface RegisterPayload {
+  name: string,
+  email: string,
+  password: string
+}
+
+export interface AuthResponse {
+  data: any,
+  errors: Error[]
+}
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  apiKey: string
+  createdAt: number
 }

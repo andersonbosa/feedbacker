@@ -20,12 +20,13 @@ export default httpClient => ({
       errors
     }
   },
+
   login: async ({ email, password }) => {
-    console.log(' 🟡 POST', email)
     const response = await httpClient.post('/auth/login', {
       email,
       password
     })
+
     let errors = null
 
     if (!response.data) {

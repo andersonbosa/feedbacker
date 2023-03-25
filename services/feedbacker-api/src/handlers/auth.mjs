@@ -4,8 +4,11 @@ const {
   JWT_API_SECRET,
 } = process.env
 
+
+const oneHour = 60 * 60
+
 const jwtSignOptions = {
-  expiresIn: 60 * 60
+  expiresIn: oneHour * 24
 }
 
 function CreateAuthHandler (dbClient) {
@@ -31,7 +34,7 @@ function CreateAuthHandler (dbClient) {
 
     const payload = {
       id: user.id,
-      email: user.email,
+      email: user.email, /* REVIEW SECURITY ISSUE: Can exposing user email via JWT be an attack on your privacy? */
       name: user.name
     }
 

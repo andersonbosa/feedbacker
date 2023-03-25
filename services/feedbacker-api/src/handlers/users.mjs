@@ -37,6 +37,8 @@ function CreateUserHandler (db) {
     ctx.body = { error: 'User not updated' }
   }
 
+  /* TODO implementar política de senha */
+  /* TODO implementar usuários únicos por email */
   async function create (ctx) {
     const { email, password, name } = ctx.request.body
 

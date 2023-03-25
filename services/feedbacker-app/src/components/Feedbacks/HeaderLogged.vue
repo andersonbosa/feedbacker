@@ -1,37 +1,15 @@
-
 <script setup lang="ts">
-import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
-
 const goToHome = () => navigateTo('/', { redirectCode: 301 })
 const goToFeedbacks = () => navigateTo('/feedbacks', { redirectCode: 301 })
 const goToCredentials = () => navigateTo('/credentials', { redirectCode: 301 })
 
-const user = useUser()
 
 /* TODO botão de logout com nome do usuário*/
 const logoutBtn = 'Sair'
 
-console.log(' ******** /HeaderLogged.vue')
-console.log(user.loggedUser.name)
-
-// watch(
-//   () => userStore.loggedUser,
-//   (name) => {
-
-//     if (!name) {
-//       console.log(' ********** Guam')
-
-//       logoutBtn.label = 'Entrar1'
-//     } else {
-//       console.log(' ********** Russia')
-
-//       logoutBtn.label = `${name} (sair)`
-//     }
-//   }
-// )
 
 function handleLogout () {
-  useUser().logout()
+  useAuth().logoutHandler()
   goToHome()
 }
 </script>
@@ -56,10 +34,10 @@ function handleLogout () {
         <li id="logout-button" @click="handleLogout"
           class="px-6 py-2 font-bold bg-white rounded-full cursor-pointer text-brand-main focus:outline-none">
           {{ logoutBtn }}
+          <!-- TODO botão com nome do usuário -->
         </li>
       </ul>
     </div>
   </div>
 </template>
-
 

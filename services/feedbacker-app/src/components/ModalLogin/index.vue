@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { useField } from 'vee-validate'
-import Icon from '~/components/Icon/index.vue'
 import { useGlobalStore } from '~/stores/global'
-import { authorizeUser, } from '~/utils/common'
-import services from '~/utils/services'
-import { validateEmptyAndEmail, validateEmptyAndLength3, } from '~/utils/validators'
+import { validateEmptyAndEmail, validateEmptyAndLength3 } from '~/utils/validators'
 
-/* NOTE useModalStore or useModal should standardize these states
-e just receive events? */
-
+/* NOTE useModalStore or useModal should standardize these states e just receive events? */
 
 const globalStore = useGlobalStore()
-const { toast } = useNotification()
 
 const { value: emailValue, errorMessage: emailErrorMessage } = useField(
   'email',
@@ -22,6 +16,50 @@ const { value: passwordValue, errorMessage: passwordErrorMessage } = useField(
   'password',
   validateEmptyAndLength3
 )
+
+async function handleSubmit () {
+  try {
+    // useNotification().toast.clear()
+    globalStore.isLoading = true
+
+    const loginPayload = {
+      email: globalStore.email.value,
+      password: globalStore.password.value,
+    }
+
+    // TODO
+    const { data, errors } = await useAuth().loginHandler(loginPayload)
+    console.log(data)
+    console.log(errors)
+    //////////////////////////////// NOTE CONTINUE HERE
+    // if (!errors) {
+    //   authorizeUser(data.userToken)
+    //   globalStore.isLoading = false
+    //   return
+    // }
+    // FIXME: security issue: it leads to user enumeration
+    // if (errors.status === 404) {
+    //   useNotification().toast.error('E-mail não encontrado')
+    // }
+    // if (errors.status === 400) {
+    //   useNotification().toast.error('Ocorreu um erro ao fazer o login')
+    // }
+    // FIXMEND
+
+
+    globalStore.isLoading = false
+  } catch (error) {
+    globalStore.isLoading = false
+    globalStore.hasErrors = !!error
+    useNotification().toast.error('Ocorreu um erro ao fazer o login')
+    // throw error
+  }
+}
+
+async function handleModalClose () {
+  useModal().close()
+}
+
 
 function setupLoginModalState () {
   const componentInitialState = {
@@ -38,53 +76,6 @@ function setupLoginModalState () {
   }
 
   Object.assign(globalStore, componentInitialState)
-}
-
-async function handleSubmit () {
-  try {
-    toast.clear()
-    globalStore.isLoading = true
-
-    const { data, errors } = await services.auth.login({
-      email: globalStore.email.value,
-      password: globalStore.password.value, 
-    })
-
-    if (!errors) {
-      authorizeUser(data.userToken)
-      globalStore.isLoading = false
-      return
-    }
-
-    if (errors.status >= 500) {
-      toast.error(
-        'Ocorreu um erro no servidor e a equipe de suporte já foi notificada!'
-      )
-    }
-    if (errors.status === 401) {
-      toast.error('E-mail/senha inválidos')
-    }
-    // FIXME: security issue: it leads to user enumeration
-    // if (errors.status === 404) {
-    //   toast.error('E-mail não encontrado')
-    // }
-    // if (errors.status === 400) {
-    //   toast.error('Ocorreu um erro ao fazer o login')
-    // }
-    // FIXMEND
-
-
-    globalStore.isLoading = false
-  } catch (error) {
-    globalStore.isLoading = false
-    globalStore.hasErrors = !!error
-    toast.error('Ocorreu um erro ao fazer o login')
-    console.error(error)
-  }
-}
-
-async function handleModalClose () {
-  useModal().close()
 }
 
 onMounted(() => {

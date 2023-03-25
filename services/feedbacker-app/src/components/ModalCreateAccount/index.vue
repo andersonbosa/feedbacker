@@ -13,43 +13,43 @@
     <form @submit.prevent="handleSubmit">
       <label class="block">
         <span class="text-lg font-medium text-gray-800">Nome</span>
-        <input v-model="state.name.value" type="text" :class="{
-          'border-brand-danger': !!state.name.errorMessage
+        <input v-model="componentState.name.value" type="text" :class="{
+          'border-brand-danger': !!componentState.name.errorMessage
         }" class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
-          placeholder="Jone Doe">
-        <span v-if="!!state.name.errorMessage" class="block font-medium text-brand-danger">
-          {{ state.name.errorMessage }}
+          placeholder="Jone Doe" autofocus autocomplete name="name">
+        <span v-if="!!componentState.name.errorMessage" class="block font-medium text-brand-danger">
+          {{ componentState.name.errorMessage }}
         </span>
       </label>
 
       <label class="block mt-9">
         <span class="text-lg font-medium text-gray-800">E-mail</span>
-        <input v-model="state.email.value" type="email" :class="{
-          'border-brand-danger': !!state.email.errorMessage
+        <input v-model="componentState.email.value" type="email" :class="{
+          'border-brand-danger': !!componentState.email.errorMessage
         }" class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
-          placeholder="jane.dae@gmail.com">
-        <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
-          {{ state.email.errorMessage }}
+          placeholder="jane.dae@gmail.com" autofocus autocomplete name="email">
+        <span v-if="!!componentState.email.errorMessage" class="block font-medium text-brand-danger">
+          {{ componentState.email.errorMessage }}
         </span>
       </label>
 
       <label class="block mt-9">
         <span class="text-lg font-medium text-gray-800">Senha</span>
-        <input v-model="state.password.value" type="password" :class="{
-          'border-brand-danger': !!state.password.errorMessage
+        <input v-model="componentState.password.value" type="password" :class="{
+          'border-brand-danger': !!componentState.password.errorMessage
         }" class="block w-full px-4 py-3 mt-1 text-lg bg-gray-100 border-2 border-transparent rounded"
-          placeholder="jane.dae@gmail.com">
-        <span v-if="!!state.password.errorMessage" class="block font-medium text-brand-danger">
-          {{ state.password.errorMessage }}
+          placeholder="jane.dae@gmail.com" autofocus autocomplete name="password">
+        <span v-if="!!componentState.password.errorMessage" class="block font-medium text-brand-danger">
+          {{ componentState.password.errorMessage }}
         </span>
       </label>
 
-      <button :disabled="state.isLoading" type="submit" :class="{
-        'opacity-50': state.isLoading
+      <button :disabled="global.isLoading" type="submit" :class="{
+        'opacity-50': global.isLoading
       }"
         class="px-8 py-3 mt-10 text-2xl font-bold text-white rounded-full bg-brand-main focus:outline-none transition-all duration-150">
-        <icon v-if="state.isLoading" name="loading" class="animate-spin" />
-        <span v-else>Entrar</span>
+        <icon v-if="global.isLoading" name="loading" class="animate-spin" />
+        <span v-else>Criar</span>
       </button>
     </form>
   </div>
@@ -58,16 +58,12 @@
 <script setup>
 import { useField } from 'vee-validate'
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
-import Icon from '~/components/Icon'
-import services from '~/utils/services'
+import { useGlobalStore } from '~/stores/global'
 import { validateEmptyAndEmail, validateEmptyAndLength3 } from '~/utils/validators'
-import { setClientAuthToken } from '~~/src/utils/common'
 
-const router = useRouter()
-const modal = useModal()
-const toast = useToast()
+const global = useGlobalStore()
+const auth = useAuth()
+const { toast } = useNotification()
 
 const {
   value: nameValue,
@@ -84,7 +80,8 @@ const {
   errorMessage: passwordErrorMessage
 } = useField('password', validateEmptyAndLength3)
 
-const state = reactive({
+
+const state = {
   hasErrors: false,
   isLoading: false,
   name: {
@@ -99,54 +96,54 @@ const state = reactive({
     value: passwordValue,
     errorMessage: passwordErrorMessage
   }
-})
-
-async function tryLogin ({ email, password }) {
-  const { data, errors } = await services.auth.login({ email, password })
-  if (!errors) {
-    setClientAuthToken(data.userToken)
-    navigateTo('/feedbacks')
-    useModal().close()
-  }
-
-  state.isLoading = false
 }
 
+// const componentState = reactive(state)
+const componentState = Object.assign(global, state)
 
 async function handleModalClose () {
   useModal().close()
 }
 
+/*
+  DONE 1) usuario foi criado?
+  emite sucesso de criação
+  tenta logar o usuário
+  se logar,
+    rotina de login
 
+  DONE 2) existem erros?
+    avisa equipe técnica
+      loga no console para evidência (melhoria: ser input automático)
+    notifica usuário
+*/
 async function handleSubmit () {
   try {
-    toast.clear()
-    state.isLoading = true
+    global.isLoading = true
 
-    const { errors } = await services.auth.register({
-      name: state.name.value,
-      email: state.email.value,
-      password: state.password.value
-    })
-
-    if (!errors) {
-      await tryLogin({
-        email: state.email.value,
-        password: state.password.value
-      })
-      return
+    const registerPayload = {
+      name: componentState.name.value,
+      email: componentState.email.value,
+      password: componentState.password.value,
     }
 
-    if (errors.status === 400) {
-      toast.error('Ocorreu um erro ao criar a conta')
+    await auth.registerHandler(registerPayload)
+
+    const loginPayload = {
+      email: registerPayload.email,
+      password: registerPayload.password,
     }
 
-    state.isLoading = false
+    await auth.loginHandler(loginPayload)
+
+    global.isLoading = false
+
   } catch (error) {
-    state.isLoading = false
-    state.hasErrors = !!error
-    toast.error('Ocorreu um erro ao criar a conta')
+    global.isLoading = false
+    componentState.hasErrors = !!error
+    toast.error('Ocorreu algum erro ao criar sua conta. A equipe técnica já foi notificada!')
+    debugger
+    throw Error(error)
   }
 }
-
 </script>

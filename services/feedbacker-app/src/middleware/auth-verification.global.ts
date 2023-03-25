@@ -1,5 +1,5 @@
-import { useUserStore } from '~~/src/stores/userStore'
-import services from '~/utils/services'
+// import { useUserStore } from '~/stores/userStore'
+// import services from '~/utils/services'
 
 /* Middleware demonstration */
 export default defineNuxtRouteMiddleware(
