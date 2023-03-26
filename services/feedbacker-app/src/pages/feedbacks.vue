@@ -25,6 +25,7 @@ function handleErrors (error: any) {
   feedbacksState.isLoadingMoreFeedback = false
   feedbacksState.hasError = !!error
 }
+
 onErrorCaptured(handleErrors)
 
 async function fetchFeedbacks () {
