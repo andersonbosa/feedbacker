@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-WORKDIR /var/www/app
+WORKDIR /api
 
 COPY . .
 # RUN npm install --only=production --silent

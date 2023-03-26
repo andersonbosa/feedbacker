@@ -32,9 +32,9 @@ services:
             - '3000:3000'
         networks:
             - exposed-net
-        # volumes:
+        volumes:
+            - ./services/feedbacker-api:/api
         #     - nodemodules:/app/node_modules
-        #     - ./services/feedbacker-app:/app
         # depends_on:
         #     - database
         #                
