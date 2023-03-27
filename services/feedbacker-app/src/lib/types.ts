@@ -13,16 +13,16 @@ export interface LabelsInterface {
 }
 
 export interface IFilterColor {
-  text: string
-  bg: string
+  text?: string
+  bg?: string
 }
 
 export interface IFilter {
-  label: string
-  color: IFilterColor
-  amount: number
+  label?: string
+  amount?: number
   active?: boolean
   type?: string
+  color: IFilterColor
 }
 
 export interface ISummary {

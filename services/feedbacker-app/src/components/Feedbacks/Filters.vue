@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { IFilter } from '~/lib/types'
 import { SUMMARY_MAP_TREE } from '~/lib/contants'
+import { IFilter } from '~/lib/types'
+import { feedbacksStore } from '~/stores/feedbacks'
 import { useGlobalStore } from '~/stores/global'
-import { useFeedbacks } from '~/stores/feedbacks'
 import services from '~/utils/services/index'
 
 /* TOFIX falta comportamentos abaixo
 atualizar lista dos feedbacks baseado no filtro selecionado
 */
 
-const feedbacksState = useFeedbacks()
-const globalState = useGlobalStore()
-
-const props = defineProps({
-  msg: String,
-  count: {
-    type: Number,
-    default: 0
-  }
-})
 const emit = defineEmits(['select'])
+const feedbacksState = feedbacksStore()
+const globalState = useGlobalStore()
 
 
 function applyFiltersStructure (summary: any) {
@@ -29,10 +21,11 @@ function applyFiltersStructure (summary: any) {
       ...SUMMARY_MAP_TREE[summarySlug],
       amount: summary[summarySlug],
       type: summarySlug,
-      active: false
+      active: false,
     }
 
     const isDefaultActive = summarySlug === 'all'
+
     if (isDefaultActive) {
       currentFilter.active = true
     } else {
@@ -45,43 +38,60 @@ function applyFiltersStructure (summary: any) {
   return Object.keys(summary).reduce(parseFiltersStructures, [])
 }
 
+function updateFiltersBasedOnSelectedType (filters: IFilter[], selectedFilterType: string | undefined): IFilter[] {
+  if (!filters || !selectedFilterType) {
+    throw new Error('oh no!')
+  }
 
-function updateFiltersBasedOnTypeSelect (filters: IFilter[], selectedFilterType: String): IFilter[] {
-  return filters.map((filter) => {
+  const parseSelectedFilter = (filter: IFilter) => {
     if (filter.type === selectedFilterType) {
       return { ...filter, active: true }
     }
 
     return { ...filter, active: false }
-  })
+  }
+
+  return filters.map(parseSelectedFilter)
 }
 
+function triggerFilterSelect (type: string | undefined) {
+  emit('select-filter', type)
+}
 
 function handleSelect (selectedFilter: IFilter) {
-  console.log(' 🔴🔴🔴🔴🔴 handleSelect', selectedFilter.type)
   if (globalState.isLoading) {
-    console.warn('globalState.isLoading')
+    // throw new Error('oh no! globalState.isLoading')
     return
   }
 
-  globalState.filters = updateFiltersBasedOnTypeSelect(globalState.filters, selectedFilter.type)
-  emit('select', selectedFilter.type) // TODO implement emit
+  feedbacksState.filters = updateFiltersBasedOnSelectedType(
+    feedbacksState.filters,
+    selectedFilter.type
+  )
+
+  console.log(selectedFilter)
+  triggerFilterSelect(selectedFilter.type) /* REVIEW */
 }
 
 async function initializeFilters () {
   try {
     const { data } = await services.feedbacks.getSummary()
-    globalState.filters = applyFiltersStructure(data)
+    feedbacksState.filters = applyFiltersStructure(data)
 
   } catch (error) {
     /* TOFIX undefined */
     console.error(error)
 
-    feedbacksState.hasError = !!error
+    globalState.hasErrors = !!error
 
     const initialFiltersState = { all: 0, issue: 0, idea: 0, other: 0, }
-    globalState.filters = applyFiltersStructure(initialFiltersState)
+    feedbacksState.filters = applyFiltersStructure(initialFiltersState)
   }
+}
+
+function parseFilterColor (filter: IFilter) {
+  console.log(' 🟠 parseFilterColor', filter)
+  return filter.active ? filter.color.text : 'text-brand-graydark'
 }
 
 onMounted(() => {
@@ -89,21 +99,22 @@ onMounted(() => {
 })
 </script>
 
+
 <template>
   <div class="flex flex-col">
-    <h1 class="text-2xl font-regular text-brand-darkgray">Filtros</h1>
+    <h1 class="text-2xl font-regular text-brand-darkgray">
+      Filtros
+    </h1>
 
     <ul class="flex flex-col mt-3 list-none">
-      <li v-for="filter in globalState.filters" :key="filter.label" @click="() => handleSelect(filter)" :class="{
-        'bg-gray-200 bg-opacity-50': filter.active,
-      }" class="flex items-center justify-between px-4 py-1 rounded cursor-pointer">
+      <li v-for="filter in feedbacksState.filters" :key="filter.label" :class="{
+        'bg-gray-200 bg-opacity-50': filter.active
+      }" @click="() => handleSelect(filter)"
+        class="flex items-center justify-between px-4 py-1 rounded cursor-pointer">
         <div class="flex items-center">
-          <span :class="filter.color?.bg" class="inline-block w-2 h-2 mr-2 rounded-full"></span>
-          <!-- a cor não está funcionando -->
-          {{ filter.label }}
+          <span :class="filter.color.bg" class="inline-block w-2 h-2 mr-2 rounded-full" /> {{ filter.label }}
         </div>
-        <span>
-          <span :class="filter.active ? filter.color.text : 'text-brand-graydark'" class="font-bold"></span>
+        <span :class="parseFilterColor(filter)" class="font-bold">
           {{ filter.amount }}
         </span>
       </li>

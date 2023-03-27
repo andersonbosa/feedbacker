@@ -1,27 +1,15 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-/* REFACTOR ModalLogin require some vars */
-const initialStoreState = {
-  email: {
-    errorMessage: '',
-    value: ''
-  },
-  hasErrors: false,
+/* REFACTOR ModalLogin require */
+const initialState = {
   isLoading: false,
-  password: {
-    errorMessage: '',
-    value: ''
-  },
-  filters: [
-    { label: null, amount: null }
-  ]
+  hasErrors: false,
+  email: { errorMessage: '', value: '' }, /* REVIEW é coisa do input...*/
+  password: { errorMessage: '', value: '' },
 }
 
-
 export const useGlobalStore = defineStore('globalStore', {
-  state: () => ({
-    ...initialStoreState
-  }),
+  state: () => initialState,
 
   getters: {
   },
@@ -32,7 +20,6 @@ export const useGlobalStore = defineStore('globalStore', {
     }
   }
 })
-
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useGlobalStore, import.meta.hot))

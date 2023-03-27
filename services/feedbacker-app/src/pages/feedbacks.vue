@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { onErrorCaptured/* , onMounted, onUnmounted */ } from 'vue'
+/* TOFIX efeitos visuais dos filtros não estão funcionando
+https://i.imgur.com/3gJyGbF.png
+ */
+import { onErrorCaptured } from 'vue'
 
 import { PayloadGetAll } from '~/lib/types'
 
-import { useFeedbacks } from '~/stores/feedbacks'
+import { feedbacksStore } from '~/stores/feedbacks'
 import { useGlobalStore } from '~/stores/global'
 
 import FeedbackCardLoading from '~/components/Feedbacks/FeedbackCard/Loading.vue'
@@ -12,10 +15,10 @@ import Filters from '~/components/Feedbacks/Filters.vue'
 import FiltersLoading from '~/components/Feedbacks/FiltersLoading.vue'
 import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
 
-import services from '~/utils/services/index'
+import services from '~/utils/services'
 
 const globalState = useGlobalStore()
-const feedbacksState = useFeedbacks()
+const feedbacksState = feedbacksStore()
 
 function handleErrors (error: any) {
   console.error(' 🔴 handleErrors !', error)
@@ -23,7 +26,7 @@ function handleErrors (error: any) {
   globalState.isLoading = false
   feedbacksState.isLoadingFeedbacks = false
   feedbacksState.isLoadingMoreFeedback = false
-  feedbacksState.hasError = !!error
+  globalState.hasErrors = !!error
 }
 
 onErrorCaptured(handleErrors)
@@ -41,9 +44,11 @@ async function fetchFeedbacks () {
     feedbacksState.feedbacks = data.results
     feedbacksState.pagination = data.pagination
 
-    globalState.isLoading = false
   } catch (error) {
     handleErrors(error)
+
+  } finally {
+    globalState.isLoading = false
   }
 }
 
@@ -52,21 +57,22 @@ async function updateFeedbacksTypeFilter (type: string) {
   try {
     console.log(' 🔴 updateFeedbacksTypeFilter ', type)
 
+    feedbacksState.currentFeedbackType = type
     feedbacksState.isLoadingFeedbacks = true
     feedbacksState.pagination.offset = 0
     feedbacksState.pagination.limit = 5
-    feedbacksState.currentFeedbackType = type
 
-    const payload: PayloadGetAll = {
-      type, ...feedbacksState.pagination
-    }
+    const payload: PayloadGetAll = { type, ...feedbacksState.pagination }
+
     const { data } = await services.feedbacks.getAll(payload)
 
     feedbacksState.feedbacks = data.results
     feedbacksState.pagination = data.pagination
-    feedbacksState.isLoadingFeedbacks = false
   } catch (error) {
     handleErrors(error)
+
+  } finally {
+    feedbacksState.isLoadingFeedbacks = false
   }
 }
 
@@ -78,9 +84,11 @@ async function handleScroll () {
   if (globalState.isLoading || feedbacksState.isLoadingMoreFeedbacks) {
     return
   }
+
   if (!isBottomOfWindow) {
     return
   }
+
   if (feedbacksState.feedbacks.length >= feedbacksState.pagination.total) {
     return
   }
@@ -140,7 +148,7 @@ onUnmounted(() => {
 
           <suspense>
             <template #default>
-              <Filters @select="updateFeedbacksTypeFilter"
+              <Filters @select-filter="updateFeedbacksTypeFilter"
                 class="mt-8 animate__animated animate__fadeIn animate__faster" />
             </template>
             <template #fallback>
@@ -149,14 +157,14 @@ onUnmounted(() => {
           </suspense>
         </div>
         <div class="px-10 pt-20 col-span-3">
-          <p v-if="!!feedbacksState.hasError" class="text-lg text-center text-gray-800 font-regular">
+          <p v-if="!!globalState.hasErrors" class="text-lg text-center text-gray-800 font-regular">
             Aconteceu um erro ao carregar os feedbacks 🥺
           </p>
           <p v-if="
             !feedbacksState.feedbacks.length &&
             !globalState.isLoading &&
             !feedbacksState.isLoadingFeedbacks &&
-            !feedbacksState.hasError
+            !globalState.hasErrors
           " class="text-lg text-center text-gray-800 font-regular">
             Ainda nenhum feedback recebido 🤓
           </p>
