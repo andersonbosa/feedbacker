@@ -75,7 +75,7 @@ const users = [
   {
     id: 'eab759f8-f238-4ff9-ae91-ee1558982329',
     name: 'Anderson Bosa',
-    email: 'support@company.app',
+    email: 'anderson@gmail.com',
     password: '1234',
     apiKey: ['fcd5015c-10d3-4e9c-b395-ec7ed8850165'],
     createdAt: new Date('2023-01-01').getTime()

@@ -13,9 +13,11 @@ import { wait } from '~/utils/timeout'
 
 export default {
   components: { Badge, Icon },
+
   props: {
     isOpened: { type: Boolean, default: false },
     feedback: { type: Object, required: true }
+
   },
   setup (props) {
     const state = reactive({

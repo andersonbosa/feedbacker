@@ -2,12 +2,41 @@
 import HeaderLogged from '~/components/Feedbacks/HeaderLogged.vue'
 import { useGlobalStore } from '~/stores/global'
 import pallet from '~/config/palette.mjs'
+import { useUserStore } from '~/stores/userStore'
+import services from '~/utils/services'
 
 const globalState = useGlobalStore()
-const user = useUser()
+const userState = useUserStore()
 
-function handleCopy () { }
-function handleGenerateApikey () { }
+function handleError (error: any) {
+  globalState.isLoading = false
+  globalState.hasErrors = !!error
+}
+
+async function handleGenerateApikey () {
+  try {
+    globalState.isLoading = true
+    const { data } = await services.users.generateApikey()
+
+    useUser().store.setApiKey(data.apiKey)
+    globalState.isLoading = false
+  } catch (error) {
+    handleError(error)
+  }
+}
+
+async function handleCopy () {
+  useNotification().toast.clear()
+
+  try {
+    await navigator.clipboard.writeText(useUser().store.user.apiKey)
+    useNotification().toast.success('Copiado!')
+  } catch (error) {
+    handleError(error)
+  }
+}
+
+/* TOFIX doença da entidade HTML está bugada */
 </script>
 
 <template>
@@ -36,7 +65,7 @@ function handleGenerateApikey () { }
         <div v-else class="flex py-3 pl-5 mt-2 rounded justify-between items-center bg-brand-gray w-full lg:w-1/2">
           <span v-if="globalState.hasErrors">Erro ao carregar a apikey</span>
           <span v-else id="apikey">
-            {{ user.store.user.apiKey }}
+            {{ useUser().store.user.apiKey }}
           </span>
           <div class="flex ml-20 mr-5" v-if="!globalState.hasErrors">
             <icon @click="handleCopy" name="copy" :color="pallet.brand.graydark" size="24" class="cursor-pointer" />
@@ -53,13 +82,13 @@ function handleGenerateApikey () { }
         <div v-else class="py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray w-full lg:w-2/3 overflow-x-scroll">
           <span v-if="globalState.hasErrors">Erro ao carregar o script</span>
           <pre v-else>
-              &lt;script
-                defer
-                async
-                onload="init('{{ user.store.user.apiKey }}')"
-                  src="https://igorhalfeld-feedbacker-widget.netlify.app/init.js"
-                  &gt;&lt;/script&gt;
-              </pre>
+      &lt;script&gt;
+        defer
+        async
+        onload="init('{{ useUser().store.user.apiKey }}')"
+        src="https://andersonbosa-feedbacker-widget.netlify.app/init.js"
+      &lt;/script&gt;
+                </pre>
         </div>
       </div>
     </div>

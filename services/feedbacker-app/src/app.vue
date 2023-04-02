@@ -8,6 +8,7 @@ import ModalFactory from '~/components/ModalFactory/index.vue'
 // const runtimeCfg = useRuntimeConfig()
 // console.log('=====app.vue runtimeCfg', runtimeCfg);
 useHead({ title: `Feedbacker | ${getSPDate()}`, })
+useAuth().tryPersistUserByLocalStorage()
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 import { AuthResponse, LoginPayload, RegisterPayload } from '~/lib/types'
 import { cleanBrowserAuthorization } from '~/utils/common'
 import services from '~/utils/services'
-import { LOCAL_STORAGE_TOKEN_NAME } from '../lib/contants'
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/lib/contants'
 
 
-async function authorizeToken (jwt: string) {
+async function loginUser (jwt: string) {
   await useUser().setUserIdentityByToken(jwt)
   useUser().welcomeUser()
-  return undefined
+  navigateTo('/feedbacks', { redirectCode: 301 })
 }
 
 async function handleAccountCreateModalErrors (errors = []) {
@@ -108,28 +108,19 @@ export default function useAuth () {
 
     async loginHandler (loginPayload: LoginPayload): AuthResponse {
       try {
-        console.log(' 🟠 loginHandler', /* loginPayload */)
         const { data, errors } = await services.auth.login(loginPayload)
         handleLoginErrors(errors)
 
         const hasToken = Boolean(data?.userToken)
-        const hasCredentials = Boolean(data?.id && data?.name)
-
-        /* authentication strategies */
-        if (hasToken) {
-          authorizeToken(data.userToken)
-        } else if (hasCredentials) {
-          /* TOFIX */
-          // await authorizeCredentials(data)
-          console.log(' 🟠 hasCredentials', data)
+        if (!hasToken) {
+          throw errors
         }
 
-        /* REVIEW FAZ SENTIDO RETORNAR VALOR? FAZ SENTIDO SER COM RETURN-EARLY? */
-        return { data: data, errors: [errors] }
+        loginUser(data.userToken)
 
       } catch (error: any) {
         /* REVIEW observeErrorOnSentry(error)  */
-        return { data: undefined, errors: [error] }
+        throw error || errors
       }
     },
 
@@ -142,16 +133,17 @@ export default function useAuth () {
     },
 
     async tryPersistUserByLocalStorage () {
-      if (useAuth().getLocalJWT()) {
-        return
-      }
+      console.log('🟢 tryPersistUserByLocalStorage')
+
+      // if (useAuth().getLocalJWT()) {
+      //   return
+      // }
 
       if (useAuth().userIsAuth()) {
         return
       }
 
       const { data } = await services.users.getMe()
-
       const hasUserData = data?.id && data?.name
       if (!hasUserData) {
         return
@@ -161,6 +153,7 @@ export default function useAuth () {
       useUser().store.setUser(data)
       useUser().store.setToken(useAuth().getLocalJWT())
       useUser().welcomeUser()
+      navigateTo('/feedbacks', { redirectCode: 301 })
     },
 
     getLocalJWT () {

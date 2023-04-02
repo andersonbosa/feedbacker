@@ -1,11 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { decodeJWT } from '~/utils/common'
 import { User } from '~/lib/types'
-
-
-// const userInitialState: UserInitialState = {
-//   user: {}
-// }
+import { decodeJWT } from '~/utils/common'
 
 interface UserStore {
   user: User | undefined
@@ -24,34 +19,30 @@ export const useUserStore: any = defineStore('userStore', {
     getUserFirstName (): string {
       const firstName = this.user?.name?.split(' ')?.[0]
       if (!firstName) {
-        throw new Error('ERROR_CODE: aadbcbab-e90d-5054-b488-46dd86192867')
+        throw new Error('Error on #getUserFirstName')
       }
 
       return firstName
+    },
+
+    getUserApiKey (): string {
+      return this?.user?.apiKey || 'Something wrong'
     }
-    // getName () {
-    //   return this.user.name || undefined
-    // },
-    // getEmail () {
-    //   return this.user.email || undefined
-    // },
-    // getApiKey () {
-    //   return this.user.apiKey || undefined
-    // },
-    // getJWT () {
-    //   return this.token
-    // },
-    // getDecodedJWT () {
-    //   return decodeJWT(this.token)
-    // },
   },
 
   actions: {
+    setApiKey (apiKey: string) {
+      this.$patch((state) => {
+        state.apiKey = apiKey
+      })
+    },
+
     setToken (token: string) {
       this.$patch((state) => {
         state.token = token
       })
     },
+
     setUser (user: User) {
       if (!user) {
         /* TODO emitir error */

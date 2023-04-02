@@ -1,4 +1,3 @@
-import { User } from '~/lib/types'
 import { useUserStore } from '~/stores/userStore'
 import { setClientAuthToken } from '~/utils/common'
 import services from '~/utils/services'
@@ -33,7 +32,6 @@ export default function useUser () {
     welcomeUser () {
       toast.success(`Bem vind@, ${this.store.getUserFirstName}!`)
       useModal().close()
-      useRouter().push('/feedbacks')
     },
   }
 }

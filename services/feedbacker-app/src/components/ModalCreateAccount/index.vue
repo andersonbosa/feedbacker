@@ -57,7 +57,6 @@
 
 <script setup>
 import { useField } from 'vee-validate'
-import { reactive } from 'vue'
 import { useGlobalStore } from '~/stores/global'
 import { validateEmptyAndEmail, validateEmptyAndLength3 } from '~/utils/validators'
 

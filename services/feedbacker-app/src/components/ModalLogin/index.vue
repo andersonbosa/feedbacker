@@ -22,8 +22,8 @@ const { value: passwordValue, errorMessage: passwordErrorMessage } = useField(
 async function handleSubmitLogin () {
   try {
     const loginPayload = {
-      email: globalStore.email,
-      password: globalStore.password,
+      email: globalStore.email.value,
+      password: globalStore.password.value,
     }
 
     await useAuth().loginHandler(loginPayload)
