@@ -1,4 +1,26 @@
-# Nuxt 3 Minimal Starter
+# feedbacker-app
+
+### Credentials
+
+- email: `user@feedbacker.com`
+- password: `1234`
+
+### Prints
+
+home page:
+![homePage](./docs/prints/homePage.png)
+
+feedbacks page:
+![feedbacksPage](./docs/prints/feedbacksPage.png)
+
+credentials page:
+![credentialsPage](./docs/prints/credentialsPage.png)
+
+
+---
+<details>
+<summary> Nuxt 3 Minimal Starter</summary>
+
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -40,3 +62,6 @@ npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+</details>

@@ -21,11 +21,17 @@
 
 <h2 id="about">💬 About</h2>
 
-Product developed during the Vue3 course offered by the @vuejs-br community and refactored by me in 2023 
+Product developed during the Vue3 course offered by the @vuejs-br community and refactored by me in 2023. 
+
+For more details about each service, check its README.
+- [app](services/feedbacker-app/README.md)
+- [api](services/feedbacker-api/README.md)
+- [widget](services/feedbacker-widget/README.md)
+
+Documentation can be found on [./docs](./docs/wiki.md)
 
 
 <h2 id="technologies"> 🛠️ Technologies</h2>
-
 
 Front-end:
 * [Nuxt3](https://nuxt.com/)
@@ -36,6 +42,10 @@ Back-end:
 * [Koa](https://koajs.com/)
 * [Nodemon](https://nodemon.io/)
 * [Eslint](https://eslint.org/)
+
+
+Widget/Product:
+* [TBD](#)
 
 Infra:
 * [Docker](https://www.docker.com/)
@@ -59,7 +69,7 @@ Infra:
 
 This project is under the MIT license.
 
-<details open>
+<details>
   <summary>
     <h2 id="statistics">📊 Statistics </h2>
   </summary>

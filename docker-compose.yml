@@ -16,8 +16,8 @@ services:
             - 24678:24678
         networks:
             - exposed-net
-        volumes:
-            - ./services/feedbacker-app:/app
+        # volumes:
+        #     - ./services/feedbacker-app:/app
         # depends_on:
         #     - backend
 
@@ -32,8 +32,8 @@ services:
             - '3000:3000'
         networks:
             - exposed-net
-        volumes:
-            - ./services/feedbacker-api:/api
+        # volumes:
+        #     - ./services/feedbacker-api:/api
         #     - nodemodules:/app/node_modules
         # depends_on:
         #     - database
