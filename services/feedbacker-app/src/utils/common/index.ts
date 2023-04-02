@@ -42,11 +42,11 @@ export function cleanBrowserAuthorization () {
   return
 }
 
-export function storeUser (token: string) {
-  useUser().setJWT(token)
-  useUser().setUser(token)
-  return
-}
+// export function storeUser (token: string) {
+//   useUser().setJWT(token)
+//   useUser().setUser(token)
+//   return
+// }
 
 // export async function authorizeUser (token: string) {
 //   setClientAuthToken(token)

@@ -47,6 +47,11 @@ export const useUserStore: any = defineStore('userStore', {
   },
 
   actions: {
+    setToken (token: string) {
+      this.$patch((state) => {
+        state.token = token
+      })
+    },
     setUser (user: User) {
       if (!user) {
         /* TODO emitir error */

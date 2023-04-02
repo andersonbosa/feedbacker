@@ -10,7 +10,7 @@
   </div>
 
   <div class="mt-16">
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmitCreate">
       <label class="block">
         <span class="text-lg font-medium text-gray-800">Nome</span>
         <input v-model="componentState.name.value" type="text" :class="{
@@ -117,7 +117,7 @@ async function handleModalClose () {
       loga no console para evidência (melhoria: ser input automático)
     notifica usuário
 */
-async function handleSubmit () {
+async function handleSubmitCreate () {
   try {
     global.isLoading = true
 

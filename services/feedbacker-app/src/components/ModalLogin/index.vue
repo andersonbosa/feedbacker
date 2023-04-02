@@ -17,42 +17,24 @@ const { value: passwordValue, errorMessage: passwordErrorMessage } = useField(
   validateEmptyAndLength3
 )
 
-async function handleSubmit () {
-  try {
-    // useNotification().toast.clear()
-    globalStore.isLoading = true
 
+
+async function handleSubmitLogin () {
+  try {
     const loginPayload = {
-      email: globalStore.email.value,
-      password: globalStore.password.value,
+      email: globalStore.email,
+      password: globalStore.password,
     }
 
-    // TODO
-    const { data, errors } = await useAuth().loginHandler(loginPayload)
-    console.log(data)
-    console.log(errors)
-    //////////////////////////////// NOTE CONTINUE HERE
-    // if (!errors) {
-    //   authorizeUser(data.userToken)
-    //   globalStore.isLoading = false
-    //   return
-    // }
-    // FIXME: security issue: it leads to user enumeration
-    // if (errors.status === 404) {
-    //   useNotification().toast.error('E-mail não encontrado')
-    // }
-    // if (errors.status === 400) {
-    //   useNotification().toast.error('Ocorreu um erro ao fazer o login')
-    // }
-    // FIXMEND
-
+    await useAuth().loginHandler(loginPayload)
 
     globalStore.isLoading = false
+
   } catch (error) {
     globalStore.isLoading = false
     globalStore.hasErrors = !!error
-    useNotification().toast.error('Ocorreu um erro ao fazer o login')
-    // throw error
+    useNotification().toast.error('Não foi possível se autenticar!')
+    throw Error(error)
   }
 }
 
@@ -94,7 +76,7 @@ onMounted(() => {
     </div>
 
     <div class="mt-16">
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleSubmitLogin">
         <label class="block">
           <span class="text-lg font-medium text-gray-800">E-mail</span>
           <input id="email-field" v-model="globalStore.email.value" type="email" :class="{

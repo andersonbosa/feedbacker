@@ -18,12 +18,6 @@ function handleAccountCreateModal () {
   console.log(' 🟣 handleAccountCreateModal',)
   modal.open(modal.configs.createSignUpModal())
 }
-
-const verifyUserToken = () => {
-  useAuth().tryPersistUserByLocalStorage()
-}
-
-onMounted(verifyUserToken)
 </script>
 
 
@@ -36,4 +30,4 @@ onMounted(verifyUserToken)
 </template>
 
 
-/* <style scoped lang="postcss"></style> */
+<style scoped lang="postcss"></style> */

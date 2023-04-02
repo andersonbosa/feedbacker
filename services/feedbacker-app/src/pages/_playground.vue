@@ -17,7 +17,7 @@ async function processUserInput (inputParam: any) {
   }
 }
 
-async function handleSubmit () {
+async function handleSubmitPlayground () {
   const wantedResult = await processUserInput(useUserInput.value)
 
   useResultOutput.value = wantedResult
@@ -26,7 +26,7 @@ async function handleSubmit () {
 
 <template>
   <div class="w-full max-w-sm mx-auto mt-6">
-    <form @submit.prevent="handleSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form @submit.prevent="handleSubmitPlayground" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Input

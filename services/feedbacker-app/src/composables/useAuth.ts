@@ -1,6 +1,7 @@
 import { AuthResponse, LoginPayload, RegisterPayload } from '~/lib/types'
 import { cleanBrowserAuthorization } from '~/utils/common'
 import services from '~/utils/services'
+import { LOCAL_STORAGE_TOKEN_NAME } from '../lib/contants'
 
 
 async function authorizeToken (jwt: string) {
@@ -79,8 +80,12 @@ async function performAccountLogin (loginPayload: LoginPayload) {
 
 export default function useAuth () {
   console.log('🔐 useAuth')
-  // const defaultReturn = { data: undefined, errors: [] }
+
   return {
+
+    userIsAuth () {
+      return Boolean(useUser().store.user?.id)
+    },
 
     async registerHandler (registerPayload: RegisterPayload): AuthResponse {
       console.log(' 🟠 registerHandler', /* registerPayload */)
@@ -102,9 +107,8 @@ export default function useAuth () {
     },
 
     async loginHandler (loginPayload: LoginPayload): AuthResponse {
-      console.log(' 🟠 loginHandler', /* loginPayload */)
-
       try {
+        console.log(' 🟠 loginHandler', /* loginPayload */)
         const { data, errors } = await services.auth.login(loginPayload)
         handleLoginErrors(errors)
 
@@ -138,13 +142,29 @@ export default function useAuth () {
     },
 
     async tryPersistUserByLocalStorage () {
-      const { data } = await services.users.getMe()
-
-      if (data?.id && data?.name) {
-        useUser().loginByToken(data)
+      if (useAuth().getLocalJWT()) {
         return
       }
-      // useUser().store.resetUserStore()
+
+      if (useAuth().userIsAuth()) {
+        return
+      }
+
+      const { data } = await services.users.getMe()
+
+      const hasUserData = data?.id && data?.name
+      if (!hasUserData) {
+        return
+      }
+
+      /* REFACTOR seems very ugly this 😢 */
+      useUser().store.setUser(data)
+      useUser().store.setToken(useAuth().getLocalJWT())
+      useUser().welcomeUser()
+    },
+
+    getLocalJWT () {
+      return window?.localStorage?.getItem(LOCAL_STORAGE_TOKEN_NAME)
     }
   }
 }

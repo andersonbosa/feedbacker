@@ -24,13 +24,10 @@ export default function useUser () {
 
       const { data } = await services.users.getMe()
       if (data?.id && data?.name) {
-        useUser().loginByToken(data)
+        this.store.setUser(data)
+        this.store.setToken(useAuth().getLocalJWT())
         return
       }
-    },
-
-    loginByToken (user: User) {
-      this.store.setUser(user)
     },
 
     welcomeUser () {
