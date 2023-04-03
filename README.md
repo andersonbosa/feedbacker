@@ -40,12 +40,16 @@ Front-end:
 
 Back-end:
 * [Koa](https://koajs.com/)
-* [Nodemon](https://nodemon.io/)
 * [Eslint](https://eslint.org/)
 
 
 Widget/Product:
-* [TBD](#)
+* [Vite.js](https://vitejs.dev/)
+  * [+ Vue 3](https://v3.vuejs.org/)
+  * [+ Typescript](https://www.typescriptlang.org/)
+* [Axios](https://axios-http.com/)
+* [Tailwind](https://tailwindcss.com/)
+
 
 Infra:
 * [Docker](https://www.docker.com/)
