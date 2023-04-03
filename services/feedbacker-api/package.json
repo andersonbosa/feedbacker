@@ -1,0 +1,37 @@
+{
+  "name": "feedbacker-api",
+  "version": "1.0.0",
+  "description": "",
+  "author": "t4inha < https://github.com/andersonbosa >",
+  "license": "MIT",
+  "keywords": [
+    "koa"
+  ],
+  "type": "module",
+  "scripts": {
+    "debug": "nodemon --inspect=5858 ./src/index.mjs",
+    "dev": "DEBUG=* nodemon src/index.mjs",
+    "start": "node src/index.mjs",
+    "lint": "eslint --fix src/",
+    "test": "echo \"Error: tests to be implemented\" && exit 1",
+    "docker:build": "docker build -t feedbacker-api:latest .",
+    "docker:run": "docker run --rm -e 'DEBUG=*' -p 3000:3000 --name feedbacker_api feedbacker-api:latest",
+    "docker:dev": "npm run docker:build && npm run docker:run"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
+    "@types/koa__router": "^12.0.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.35.0",
+    "koa": "^2.14.1",
+    "koa-body": "^6.0.1",
+    "koa-jwt": "^4.0.4",
+    "koa-logger": "^3.2.1",
+    "nodemon": "^2.0.21",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18.12.x"
+  }
+}

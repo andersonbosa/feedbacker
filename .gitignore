@@ -1,3 +1,6 @@
+#####################################################################
+# API
+
 .DS_Store
 node_modules
 /dist
@@ -5,7 +8,44 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
-*.log
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.now
+.vercel
+private.pem
+public.pem
+
+#####################################################################
+# APP
+# nuxtjs defaults
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+dist
+.DS_Store
+/dist
+
+/tests/e2e/videos/
+/tests/e2e/screenshots/
 
 # local env files
 .env
@@ -25,7 +65,3 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-# Deploy files
-.now
-.vercel

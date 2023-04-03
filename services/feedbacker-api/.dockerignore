@@ -1,0 +1,11 @@
+node_modules/
+# npm-debug.log
+# .DS_Store
+# coverage/
+# src/
+# test/
+# .dockerignore
+# .ci/
+# .gitlab-ci.yml
+# *.md
+# .env

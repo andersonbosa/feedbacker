@@ -1,28 +1,89 @@
-<h1 id="top">🗣️ feedbacker</h1>
+<section align="center">
+
+  <img src="docs/banner.svg" title="Project banner" alt="Project banner" />
+
+  <br>
+  <br>
+
+  <!-- badges -->
+
+  <p>
+    <a href="#about">About</a> •
+    <a href="#technologies">Technologies</a> •
+    <a href="#contribution">Contribution</a> •
+    <a href="#author">Author</a> •
+    <a href="#license">License</a> •
+    <a href="#statistics">Statistics</a>
+  </p>
+</section>
+
+---
+
+<h2 id="about">💬 About</h2>
+
+Product developed during the Vue3 course offered by the @vuejs-br community and refactored by me in 2023. 
+
+For more details about each service, check its README.
+- [app](services/feedbacker-app/README.md)
+- [api](services/feedbacker-api/README.md)
+- [widget](services/feedbacker-widget/README.md)
+
+Documentation can be found on [./docs](./docs/wiki.md)
 
 
-<!-- badges -->
+<h2 id="technologies"> 🛠️ Technologies</h2>
 
-[![offer by](https://img.shields.io/badge/Course%20by%20@vuejsbr-blue)](https://github.com/vuejs-br)
-![Repo status](https://img.shields.io/badge/repo%20status-Inactive-inactive)
-![node package manager](https://img.shields.io/badge/npm%20client-YARN-orange)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
-<br/>
+Front-end:
+* [Nuxt3](https://nuxt.com/)
+* [Pinia](https://pinia.vuejs.org/)
+* [Tailwind](https://tailwindcss.com/)
 
-> Projeto desenvolvido durante os estudos do [curso](https://igorhalfeld.teachable.com/courses/1283923/lectures/29447426) oferecido pela comunidade [@vuejs-br](https://github.com/vuejs-br).
-
-> [ 🏆 Complete ](https://andersonbosa.notion.site/Treinamento-Vue3-by-vuejs-br-94b71d332fbd4628b659519f2f76fdc7)
-
-#### 📜 Scripts
-
-<!-- !todo -->
-- `dev:setup` - configura o ambiente para desenvolvimento.
-- `dev` - corre o ambiente de desenvolvimento.
-- `dev:<package>`: corre um pacote específico para desenvolvimento.
+Back-end:
+* [Koa](https://koajs.com/)
+* [Eslint](https://eslint.org/)
 
 
-<div align="right">
-  <button style="border: 1px solid grey;  background:white;">
-    <a style="color:grey" href="#top">back2top</a>
-  </button>
-</div>
+Widget/Product:
+* [Vite.js](https://vitejs.dev/)
+  * [+ Vue 3](https://v3.vuejs.org/)
+  * [+ Typescript](https://www.typescriptlang.org/)
+* [Axios](https://axios-http.com/)
+* [Tailwind](https://tailwindcss.com/)
+
+
+Infra:
+* [Docker](https://www.docker.com/)
+* [Docker compose](https://docs.docker.com/compose/)
+
+<h2>🚀 Deploy</h2>
+
+* Distributed here, in [Github](https://github.com/andersonbosa/feedbacker)
+
+<h2 id="contribution">🤝 Contribution</h2>
+
+<p>
+  This project is for study purposes too, so please send me a message telling me what you are doing and why you are doing it, teach me what you know. All kinds of contributions are very welcome and appreciated!
+</p>
+
+<h2 id="author">👨‍💻 Author</h2>
+
+* [@andersonbosa](https://github.com/andersonbosa)
+
+<h2 id="license"> 📝 License</h2>
+
+This project is under the MIT license.
+
+<details>
+  <summary>
+    <h2 id="statistics">📊 Statistics </h2>
+  </summary>
+  
+  <h4> Stargazers </h4>
+
+  [![Stargazers](https://reporoster.com/stars/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/stargazers)
+
+  <h4> Forkers </h4>
+
+  [![Forkers](https://reporoster.com/forks/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/network/members)
+  
+</details>

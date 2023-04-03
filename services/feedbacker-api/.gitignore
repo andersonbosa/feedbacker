@@ -1,0 +1,12 @@
+# local env files
+.env
+.env.local
+.env.*.local
+
+# build/deploy ?
+.now
+.vercel
+
+private.pem
+public.pem
+.
