@@ -1,67 +1,31 @@
 # feedbacker-app
 
-### Credentials
+## Credentials
 
 - email: `user@feedbacker.com`
 - password: `1234`
 
-### Prints
+---
 
-home page:
-![homePage](./docs/prints/homePage.png)
+## Prints
 
-feedbacks page:
-![feedbacksPage](./docs/prints/feedbacksPage.png)
+<details>
+    <summary>Página inicial:</summary>
+    <img src="./docs/prints/homePage.png" alt="homePage" >
+</details>
 
-credentials page:
-![credentialsPage](./docs/prints/credentialsPage.png)
+<details>
+    <summary>Página de feedbacks:</summary>
+    <img src="./docs/prints/feedbacksPage.png" alt="feedbacksPage">
+</details>
 
+<details>
+    <summary>Página de credenciais:</summary>
+    <img src="./docs/prints/credentialsPage.png" alt="credentialsPage">
+</details>
 
 ---
-<details>
-<summary> Nuxt 3 Minimal Starter</summary>
 
+## Getting started with Nuxt3
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-
-</details>
+Check the [getting started](./docs/getting-started.md) doc.
