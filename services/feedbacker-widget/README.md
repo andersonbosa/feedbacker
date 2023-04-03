@@ -1,68 +1,49 @@
-# produtinho
+# feedbacker-widget
 
-This template should help get you started developing with Vue 3 in Vite.
+Brief summary of what this project is and what it does.
 
-## Recommended IDE Setup
+## About
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+This is a Vue.js 3 project that uses Vite.js and Typescript. The goal of this project is to provide a feedback collection tool that can be easily embedded into client's websites.
 
-## Type Support for `.vue` Imports in TS
+<details>
+<summary>Demo:</summary>
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+<img src="./docs/prints/playground.png" />
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+</details>
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+---
 
-## Customize configuration
+## Getting Started
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+To download and install this project, follow these steps:
 
-## Project Setup
+1. Clone the repository to your local machine
+2. Install any necessary dependencies using the package manager of your choice
+3. Run the project using the command `npm start` or `yarn start`
 
-```sh
-npm install
-```
+Futher details can be found in this [doc](./docs/getting-started.md).
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-npm run dev
-```
+## Future Work
 
-### Type-Check, Compile and Minify for Production
+List any future features, improvements, or bug fixes that are planned for the project.
 
-```sh
-npm run build
-```
+---
 
-### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
+## Contribution Guidelines
 
-```sh
-npm run test:unit:dev # or `npm run test:unit` for headless testing
-```
+If you would like to contribute to this project, please follow these guidelines:
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Write your code and test it thoroughly
+4. Submit a pull request to the main repository
 
-```sh
-npm run test:e2e:dev
-```
+---
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
+## License
 
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+This project is licensed under the MIT license. See the [LICENSE.md](LICENSE.md) file for details.
