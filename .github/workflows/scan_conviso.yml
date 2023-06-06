@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: convisoappsec/flowcli
+      image: convisoappsec/flowcli:1.12.1-rc.1
     steps:
       - uses: actions/checkout@v3
 
