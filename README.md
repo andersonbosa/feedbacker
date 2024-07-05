@@ -72,18 +72,3 @@ Infra:
 <h2 id="license"> 📝 License</h2>
 
 This project is under the MIT license.
-
-<details>
-  <summary>
-    <h2 id="statistics">📊 Statistics </h2>
-  </summary>
-  
-  <h4> Stargazers </h4>
-
-  [![Stargazers](https://reporoster.com/stars/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/stargazers)
-
-  <h4> Forkers </h4>
-
-  [![Forkers](https://reporoster.com/forks/andersonbosa/feedbacker)](https://github.com/andersonbosa/feedbacker/network/members)
-  
-</details>
